@@ -20,13 +20,19 @@
   </head>
   <body>
     <main>
-      <img src="assets/logo.png" alt="logo" />
-      <h1 class="title">Les petits plats</h1>
+      <div class="logo-section">
+        <img src="assets/logo.png" alt="logo" />
+        <h1 class="title">Les petits plats</h1>
+      </div>
       <section class="search">
-        <div class="search-bar">
-          <input type="text" placeholder="Rechercher une recette" />
+        <form class="search-bar">
+          <input
+            type="text"
+            placeholder="Rechercher une recette"
+            class="search-bar-input"
+          />
           <i class="fa-solid fa-magnifying-glass"></i>
-        </div>
+        </form>
         <div class="search-advanced">
           <input type="text" placeholder="Ingredients" />
           <input type="text" placeholder="Appareils" />
