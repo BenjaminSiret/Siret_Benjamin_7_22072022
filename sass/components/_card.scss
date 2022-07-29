@@ -1,0 +1,49 @@
+.card {
+  width: 380px;
+  height: 364px;
+
+  &-img {
+    background-color: #c7bebe;
+    height: 178px;
+    border-radius: 5px 5px 0 0;
+  }
+  &-content {
+    background-color: #e7e7e7;
+    border-radius: 0 0 5px 5px;
+    padding: 18px;
+
+    &-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .recipe-title {
+        margin: 0;
+        font-family: "Lato";
+        font-size: 18px;
+        font-weight: 400;
+      }
+      .recipe-time {
+        font-family: "Lato";
+        font-weight: 700;
+        font-size: 18px;
+      }
+    }
+
+    &-text {
+      display: flex;
+      font-size: 12px;
+      padding: 20px 0;
+
+      .recipe-ingredients {
+        width: 171px;
+        font-family: "Lato";
+      }
+      .recipe-text {
+        width: 171px;
+        font-family: "Roboto";
+        font-weight: 400;
+      }
+    }
+  }
+}

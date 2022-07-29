@@ -1,4 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@700&family=Lato:wght@400;700&family=Roboto&display=swap");
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
 .header {
   text-align: center;
   margin-top: 40px;
@@ -95,4 +106,56 @@
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
+}
+
+.results {
+  width: 1240px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+}
+
+.card {
+  width: 380px;
+  height: 364px;
+}
+.card-img {
+  background-color: #c7bebe;
+  height: 178px;
+  border-radius: 5px 5px 0 0;
+}
+.card-content {
+  background-color: #e7e7e7;
+  border-radius: 0 0 5px 5px;
+  padding: 18px;
+}
+.card-content-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.card-content-header .recipe-title {
+  margin: 0;
+  font-family: "Lato";
+  font-size: 18px;
+  font-weight: 400;
+}
+.card-content-header .recipe-time {
+  font-family: "Lato";
+  font-weight: 700;
+  font-size: 18px;
+}
+.card-content-text {
+  display: flex;
+  font-size: 12px;
+  padding: 20px 0;
+}
+.card-content-text .recipe-ingredients {
+  width: 171px;
+  font-family: "Lato";
+}
+.card-content-text .recipe-text {
+  width: 171px;
+  font-family: "Roboto";
+  font-weight: 400;
 }/*# sourceMappingURL=style.css.map */
