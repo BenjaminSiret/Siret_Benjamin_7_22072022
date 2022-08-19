@@ -18,7 +18,6 @@ async function displayRecipes(recipes) {
 async function init() {
   const { recipes } = await getRecipes();
   displayRecipes(recipes);
-  searchRecipes(recipes, query);
 }
 
 init();
