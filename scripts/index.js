@@ -21,3 +21,5 @@ async function init() {
 }
 
 init();
+
+//TODO: ajouter un toLowerCase() pour la query utilisateur (dans le listener)
