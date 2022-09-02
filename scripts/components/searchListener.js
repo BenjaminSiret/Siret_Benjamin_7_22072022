@@ -1,7 +1,8 @@
 function searchListener(recipes) {
   const searchInput = document.getElementById("search-input");
   searchInput.addEventListener("keyup", () => {
-    let query = searchInput.value;
+    let query = searchInput.value.toLowerCase();
+    console.log(query);
     if (query.length > 2) {
       const searchResults = searchRecipes(recipes, query);
       if (!searchResults.length) {
