@@ -107,6 +107,14 @@ p {
   height: -moz-fit-content;
   height: fit-content;
 }
+.search .appliance-results {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
 
 .results {
   width: 1240px;
