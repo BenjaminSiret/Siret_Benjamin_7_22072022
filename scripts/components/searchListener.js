@@ -15,7 +15,20 @@ function searchListener(recipes) {
         displayAppliance(searchResults);
         displayUstensils(searchResults);
         displayIngredients(searchResults);
+        applianceListener(searchResults);
       }
     }
+  });
+}
+
+function applianceListener(searchResults) {
+  const searchInput = document.getElementById("appliance-input");
+  searchInput.addEventListener("keyup", () => {
+    let query = searchInput.value.toLowerCase().trim();
+    const applianceArray = filterAppliance(searchResults);
+    const applianceResults = applianceArray.find(
+      (appliance) => appliance === query
+    );
+    console.log(applianceResults);
   });
 }

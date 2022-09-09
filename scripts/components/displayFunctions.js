@@ -1,3 +1,33 @@
+// Filter functions ***********
+function filterAppliance(recipes) {
+  return [...new Set(recipes.map((recipe) => recipe.appliance.toLowerCase()))];
+}
+
+function filterUstensils(recipes) {
+  const ustensilsArray = recipes.map((recipe) => recipe.ustensils);
+  let searchArray = [];
+  ustensilsArray.forEach((element) => {
+    element.forEach((ustensil) => {
+      searchArray.push(ustensil.toLowerCase());
+    });
+  });
+  return [...new Set(searchArray)];
+}
+
+function filterIngredients(recipes) {
+  const ingredientsArray = recipes.map((recipe) => recipe.ingredients);
+  let searchArray = [];
+  ingredientsArray.forEach((element) => {
+    element.forEach((recipe) => {
+      searchArray.push(recipe.ingredient.toLowerCase());
+    });
+  });
+  return [...new Set(searchArray)];
+}
+
+//************************************
+// Display functions*****************
+
 function displayRecipes(recipes) {
   const recipesSection = document.querySelector(".results");
   recipes.forEach((recipe) => {
@@ -6,16 +36,14 @@ function displayRecipes(recipes) {
     recipesSection.appendChild(recipeCardDOM);
   });
 }
+
 function displayAppliance(recipes) {
   const applianceSection = document.getElementById("appliance-search");
   applianceSection.innerHTML = "";
 
-  // on utiliser new Set pour enlever les doublons
-  const applianceFinalArray = [
-    ...new Set(recipes.map((recipe) => recipe.appliance.toLowerCase())),
-  ];
+  const applianceArray = filterAppliance(recipes);
   const applianceList = document.createElement("ul");
-  applianceFinalArray.forEach((element) => {
+  applianceArray.forEach((element) => {
     const li = document.createElement("li");
     li.textContent = `${element}`;
     applianceList.appendChild(li);
@@ -27,19 +55,9 @@ function displayAppliance(recipes) {
 function displayUstensils(recipes) {
   const ustensilsSection = document.getElementById("ustensils-search");
   ustensilsSection.innerHTML = "";
-
-  const ustensilsArray = recipes.map((recipe) => recipe.ustensils);
-  let searchArray = [];
-  ustensilsArray.forEach((element) => {
-    element.forEach((ustensil) => {
-      searchArray.push(ustensil.toLowerCase());
-    });
-  });
-
-  // on utiliser new Set pour enlever les doublons
-  const ustensilsFinalArray = [...new Set(searchArray)];
+  const ustensilsArray = filterUstensils(recipes);
   const ustensilsList = document.createElement("ul");
-  ustensilsFinalArray.forEach((element) => {
+  ustensilsArray.forEach((element) => {
     const li = document.createElement("li");
     li.textContent = `${element}`;
     ustensilsList.appendChild(li);
@@ -51,19 +69,9 @@ function displayUstensils(recipes) {
 function displayIngredients(recipes) {
   const ingredientsSection = document.getElementById("ingredients-search");
   ingredientsSection.innerHTML = "";
-
-  const ingredientsArray = recipes.map((recipe) => recipe.ingredients);
-  let searchArray = [];
-  ingredientsArray.forEach((element) => {
-    element.forEach((recipe) => {
-      searchArray.push(recipe.ingredient.toLowerCase());
-    });
-  });
-
-  // on utiliser new Set pour enlever les doublons
-  const ingredientsFinalArray = [...new Set(searchArray)];
+  const ingredientsArray = filterIngredients(recipes);
   const ingredientsList = document.createElement("ul");
-  ingredientsFinalArray.forEach((element) => {
+  ingredientsArray.forEach((element) => {
     const li = document.createElement("li");
     li.textContent = `${element}`;
     ingredientsList.appendChild(li);
