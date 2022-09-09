@@ -12,6 +12,8 @@ function searchListener(recipes) {
         document.querySelector(".results").innerHTML = "";
         displayRecipes(searchResults);
         displayAppliance(searchResults);
+        displayUstensils(searchResults);
+        displayIngredients(searchResults);
       }
     }
   });

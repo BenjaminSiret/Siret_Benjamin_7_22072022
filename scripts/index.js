@@ -17,8 +17,10 @@ function displayRecipes(recipes) {
 function displayAppliance(recipes) {
   const applianceSection = document.getElementById("appliance-search");
   applianceSection.innerHTML = "";
+
+  // on utiliser new Set pour enlever les doublons
   const applianceArray = [
-    ...new Set(recipes.map((recipe) => recipe.appliance)),
+    ...new Set(recipes.map((recipe) => recipe.appliance.toLowerCase())),
   ];
   const applianceList = document.createElement("ul");
   applianceArray.forEach((element) => {
@@ -30,21 +32,55 @@ function displayAppliance(recipes) {
   applianceSection.appendChild(applianceList);
 }
 
-// function displayUstensils(recipes) {
-//   const ustensilSection = document.getElementById("ustensils-search");
-//   applianceSection.innerHTML = "";
-//   const ustensilArray = [
-//     ...new Set(recipes.map((recipe) => recipe.ustensil)),
-//   ];
-//   const applianceList = document.createElement("ul");
-//   applianceArray.forEach((element) => {
-//     const li = document.createElement("li");
-//     li.textContent = `${element}`;
-//     applianceList.appendChild(li);
-//   });
-//   applianceSection.classList.add("appliance-results");
-//   applianceSection.appendChild(applianceList);
-// }
+function displayUstensils(recipes) {
+  const ustensilsSection = document.getElementById("ustensils-search");
+  ustensilsSection.innerHTML = "";
+
+  const ustensilsArray = recipes.map((recipe) => recipe.ustensils);
+  let searchArray = [];
+  ustensilsArray.forEach((element) => {
+    element.forEach((ustensil) => {
+      searchArray.push(ustensil.toLowerCase());
+    });
+  });
+
+  // on utiliser new Set pour enlever les doublons
+  const ustensilsFinalArray = [...new Set(searchArray)];
+
+  const ustensilsList = document.createElement("ul");
+  ustensilsFinalArray.forEach((element) => {
+    const li = document.createElement("li");
+    li.textContent = `${element}`;
+    ustensilsList.appendChild(li);
+  });
+  ustensilsSection.classList.add("ustensils-results");
+  ustensilsSection.appendChild(ustensilsList);
+}
+
+function displayIngredients(recipes) {
+  const ingredientsSection = document.getElementById("ingredients-search");
+  ingredientsSection.innerHTML = "";
+
+  const ingredientsArray = recipes.map((recipe) => recipe.ingredients);
+  let searchArray = [];
+  ingredientsArray.forEach((element) => {
+    element.forEach((recipe) => {
+      searchArray.push(recipe.ingredient.toLowerCase());
+    });
+  });
+
+  // on utiliser new Set pour enlever les doublons
+  const ingredientsFinalArray = [...new Set(searchArray)];
+  console.log(ingredientsFinalArray);
+  const ingredientsList = document.createElement("ul");
+  ingredientsFinalArray.forEach((element) => {
+    const li = document.createElement("li");
+    li.textContent = `${element}`;
+    ingredientsList.appendChild(li);
+  });
+  ingredientsSection.classList.add("ingredients-results");
+  ingredientsSection.appendChild(ingredientsList);
+}
 
 // Fonction init
 async function init() {
