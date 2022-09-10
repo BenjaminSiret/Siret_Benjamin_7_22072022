@@ -30,6 +30,7 @@ function filterIngredients(recipes) {
 
 function displayRecipes(recipes) {
   const recipesSection = document.querySelector(".results");
+  recipesSection.innerHTML = "";
   recipes.forEach((recipe) => {
     const recipeModel = recipeFactory(recipe);
     const recipeCardDOM = recipeModel.getRecipeCardDOM();
