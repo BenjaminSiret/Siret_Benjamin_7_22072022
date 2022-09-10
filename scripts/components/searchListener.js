@@ -12,9 +12,7 @@ function searchListener(recipes) {
       } else {
         document.querySelector(".results").innerHTML = "";
         displayRecipes(searchResults);
-        displayAppliance(searchResults);
-        displayUstensils(searchResults);
-        displayIngredients(searchResults);
+        displayAdvancedFields(searchResults);
         applianceListener(searchResults);
       }
     }
