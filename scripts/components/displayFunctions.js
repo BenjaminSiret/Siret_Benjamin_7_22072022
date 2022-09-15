@@ -80,3 +80,43 @@ function displayAdvancedFields(recipes) {
   ingredientsSection.classList.add("ingredients-results");
   ingredientsSection.appendChild(ingredientsList);
 }
+
+function displayApplianceField(applianceArray) {
+  const applianceSection = document.getElementById("appliance-search");
+  applianceSection.innerHTML = "";
+  const applianceList = document.createElement("ul");
+  applianceArray.forEach((element) => {
+    const li = document.createElement("li");
+    li.textContent = `${element}`;
+    applianceList.appendChild(li);
+  });
+  applianceSection.classList.add("appliance-results");
+  applianceSection.appendChild(applianceList);
+}
+
+function displayUstensilsField(ustensilsArray) {
+  const ustensilsSection = document.getElementById("ustensils-search");
+  ustensilsSection.innerHTML = "";
+  const ustensilsList = document.createElement("ul");
+  ustensilsArray.forEach((element) => {
+    const li = document.createElement("li");
+    li.textContent = `${element}`;
+    ustensilsList.appendChild(li);
+  });
+  ustensilsSection.classList.add("ustensils-results");
+  ustensilsSection.appendChild(ustensilsList);
+}
+
+function displayIngredientsField(ingredientsArray) {
+  const ingredientsSection = document.getElementById("ingredients-search");
+  ingredientsSection.innerHTML = "";
+  const ingredientsList = document.createElement("ul");
+  ingredientsArray.forEach((element) => {
+    const li = document.createElement("li");
+    li.textContent = `${element}`;
+    ingredientsList.appendChild(li);
+  });
+  ingredientsSection.classList.add("ingredients-results");
+  ingredientsSection.appendChild(ingredientsList);
+}
+

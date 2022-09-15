@@ -14,22 +14,48 @@ function searchListener(recipes) {
         document.querySelector(".results").innerHTML = "";
         displayRecipes(searchResults);
         displayAdvancedFields(searchResults);
-        //applianceListener(searchResults);
       }
+
       const applianceSearchInput = document.getElementById("appliance-input");
       applianceSearchInput.addEventListener("keyup", () => {
         let query = applianceSearchInput.value.toLowerCase().trim();
-        const newSearchResults = searchRecipes(searchResults, query);
-        console.log(newSearchResults);
-        const applianceArray = filterAppliance(newSearchResults);
-        const applianceSearchResult = applianceArray.find(
-          (element) => element.toLowerCase() === query
+        const applianceArray = filterAppliance(searchResults);
+        const applianceSearchResults = applianceArray.filter(
+          (element) => element.toLowerCase().includes(query)
         );
-        if (applianceSearchResult) {
-          displayAdvancedFields(newSearchResults);
-          displayRecipes(newSearchResults);
+        if (applianceSearchResults) {
+          displayApplianceField(applianceSearchResults);
+          // const newSearchResults = searchRecipes(recipes, applianceSearchResults);
+          // displayRecipes(newSearchResults);
+        }
+
+      });
+
+      const ustensilsSearchInput = document.getElementById("ustensils-input");
+      ustensilsSearchInput.addEventListener("keyup", () => {
+        let query = ustensilsSearchInput.value.toLowerCase().trim();
+        const ustensilsArray = filterUstensils(searchResults);
+        const ustensilsSearchResults = ustensilsArray.filter((element) => element.toLowerCase().includes(query));
+        if (ustensilsSearchResults) {
+          displayUstensilsField(ustensilsSearchResults);
+          // const newSearchResults = searchRecipes(recipes, ustensilsSearchResults);
+          // displayRecipes(newSearchResults);
         }
       });
+
+      const ingredientsSearchInput = document.getElementById("ingredients-input");
+      ingredientsSearchInput.addEventListener("keyup", () => {
+        let query = ingredientsSearchInput.value.toLowerCase().trim();
+        const ingredientsArray = filterIngredients(searchResults);
+        const ingredientsSearchResults = ingredientsArray.filter((element) => element.toLowerCase().includes(query));
+        if (ingredientsSearchResults) {
+          displayIngredientsField(ingredientsSearchResults);
+          // const newSearchResults = searchRecipes(recipes, ingredientsSearchResults);
+          // displayRecipes(newSearchResults);
+        }
+      });
+
+
     }
   });
 }
