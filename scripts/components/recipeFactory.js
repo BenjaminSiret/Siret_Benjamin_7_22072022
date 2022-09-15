@@ -37,21 +37,4 @@ function recipeFactory(data) {
   };
 }
 
-function tagFactory(tag) {
-  const tagsSection = document.querySelector(".tags-section");
-  const selectedTag = document.createElement("div");
-  selectedTag.innerHTML = `<span>${tag.textContent}</span><img src='./assets/cross.png' class="cross">`;
-  switch (tag.className) {
-    case "appliance-tag":
-      selectedTag.style.backgroundColor = "#68d9a4";
-      break;
-    case "ustensil-tag":
-      selectedTag.style.backgroundColor = "#ed6454";
-      break;
-    case "ingredient-tag":
-      selectedTag.style.backgroundColor = "#3282f7";
-      break;
-  }
-  selectedTag.classList.add("selected-tag");
-  tagsSection.appendChild(selectedTag);
-}
+

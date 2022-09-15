@@ -59,7 +59,7 @@ function searchListener(recipes) {
   const tags = document.querySelectorAll(".appliance-tag, .ustensil-tag, .ingredient-tag");
   tags.forEach(tag => {
     tag.addEventListener("click", () => {
-      tagFactory(tag);
+      displayTag(tag);
     });
   });
 
