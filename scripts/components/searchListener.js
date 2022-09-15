@@ -4,7 +4,6 @@ function searchListener(recipes) {
     let query = searchInput.value.toLowerCase().trim();
     if (query.length > 2) {
       const searchResults = searchRecipes(recipes, query);
-      console.log(searchResults);
       if (!searchResults.length) {
         //TODO: afficher message d'alert à la place du console.log
         console.log(
@@ -16,19 +15,18 @@ function searchListener(recipes) {
         displayAdvancedFields(searchResults);
       }
 
-      const applianceSearchInput = document.getElementById("appliance-input");
-      applianceSearchInput.addEventListener("keyup", () => {
-        let query = applianceSearchInput.value.toLowerCase().trim();
-        const applianceArray = filterAppliance(searchResults);
-        const applianceSearchResults = applianceArray.filter(
+      const appliancesSearchInput = document.getElementById("appliances-input");
+      appliancesSearchInput.addEventListener("keyup", () => {
+        let query = appliancesSearchInput.value.toLowerCase().trim();
+        const appliancesArray = filterAppliances(searchResults);
+        const appliancesSearchResults = appliancesArray.filter(
           (element) => element.toLowerCase().includes(query)
         );
-        if (applianceSearchResults) {
-          displayApplianceField(applianceSearchResults);
+        if (appliancesSearchResults) {
+          displayAppliancesField(appliancesSearchResults);
           // const newSearchResults = searchRecipes(recipes, applianceSearchResults);
           // displayRecipes(newSearchResults);
         }
-
       });
 
       const ustensilsSearchInput = document.getElementById("ustensils-input");
@@ -54,20 +52,35 @@ function searchListener(recipes) {
           // displayRecipes(newSearchResults);
         }
       });
-
-
     }
   });
+
+  // event-listener sur tous les tags pour que l'utilisateur puisse clicker
+  const tags = document.querySelectorAll(".appliance-tag, .ustensil-tag, .ingredient-tag");
+  tags.forEach(tag => {
+    tag.addEventListener("click", () => {
+      tagFactory(tag);
+    });
+  });
+
+
 }
 
-// function applianceListener(searchResults) {
-//   const searchInput = document.getElementById("appliance-input");
-//   searchInput.addEventListener("keyup", () => {
-//     let query = searchInput.value.toLowerCase().trim();
-//     const applianceArray = filterAppliance(searchResults);
-//     const applianceResults = applianceArray.find(
-//       (appliance) => appliance === query
-//     );
-//     console.log(applianceResults);
-//   });
-// }
+function tagFactory(tag) {
+  const tagsSection = document.querySelector(".tags-section");
+  const selectedTag = document.createElement("div");
+  selectedTag.innerHTML = `<span>${tag.textContent}</span><img src='./assets/cross.png' class="cross">`;
+  switch (tag.className) {
+    case "appliance-tag":
+      selectedTag.style.backgroundColor = "#68d9a4";
+      break;
+    case "ustensil-tag":
+      selectedTag.style.backgroundColor = "#ed6454";
+      break;
+    case "ingredient-tag":
+      selectedTag.style.backgroundColor = "#3282f7";
+      break;
+  }
+  selectedTag.classList.add("selected-tag");
+  tagsSection.appendChild(selectedTag);
+}

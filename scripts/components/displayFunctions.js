@@ -1,5 +1,5 @@
 // Filter functions ***********
-function filterAppliance(recipes) {
+function filterAppliances(recipes) {
   return [...new Set(recipes.map((recipe) => recipe.appliance.toLowerCase()))];
 }
 
@@ -39,40 +39,43 @@ function displayRecipes(recipes) {
 }
 
 function displayAdvancedFields(recipes) {
-  const applianceSection = document.getElementById("appliance-search");
+  const appliancesSection = document.getElementById("appliances-search");
   const ustensilsSection = document.getElementById("ustensils-search");
   const ingredientsSection = document.getElementById("ingredients-search");
 
-  applianceSection.innerHTML = "";
+  appliancesSection.innerHTML = "";
   ustensilsSection.innerHTML = "";
   ingredientsSection.innerHTML = "";
 
-  const applianceArray = filterAppliance(recipes);
+  const appliancesArray = filterAppliances(recipes);
   const ustensilsArray = filterUstensils(recipes);
   const ingredientsArray = filterIngredients(recipes);
 
-  const applianceList = document.createElement("ul");
+  const appliancesList = document.createElement("ul");
   const ustensilsList = document.createElement("ul");
   const ingredientsList = document.createElement("ul");
 
-  applianceArray.forEach((element) => {
+  appliancesArray.forEach((element) => {
     const li = document.createElement("li");
     li.textContent = `${element}`;
-    applianceList.appendChild(li);
+    li.classList.add("appliance-tag");
+    appliancesList.appendChild(li);
   });
   ustensilsArray.forEach((element) => {
     const li = document.createElement("li");
     li.textContent = `${element}`;
+    li.classList.add("ustensil-tag");
     ustensilsList.appendChild(li);
   });
   ingredientsArray.forEach((element) => {
     const li = document.createElement("li");
     li.textContent = `${element}`;
+    li.classList.add("ingredient-tag");
     ingredientsList.appendChild(li);
   });
 
-  applianceSection.classList.add("appliance-results");
-  applianceSection.appendChild(applianceList);
+  appliancesSection.classList.add("appliance-results");
+  appliancesSection.appendChild(appliancesList);
 
   ustensilsSection.classList.add("ustensils-results");
   ustensilsSection.appendChild(ustensilsList);
@@ -81,17 +84,17 @@ function displayAdvancedFields(recipes) {
   ingredientsSection.appendChild(ingredientsList);
 }
 
-function displayApplianceField(applianceArray) {
-  const applianceSection = document.getElementById("appliance-search");
-  applianceSection.innerHTML = "";
-  const applianceList = document.createElement("ul");
-  applianceArray.forEach((element) => {
+function displayAppliancesField(appliancesArray) {
+  const appliancesSection = document.getElementById("appliances-search");
+  appliancesSection.innerHTML = "";
+  const appliancesList = document.createElement("ul");
+  appliancesArray.forEach((element) => {
     const li = document.createElement("li");
     li.textContent = `${element}`;
-    applianceList.appendChild(li);
+    appliancesList.appendChild(li);
   });
-  applianceSection.classList.add("appliance-results");
-  applianceSection.appendChild(applianceList);
+  appliancesSection.classList.add("appliances-results");
+  appliancesSection.appendChild(appliancesList);
 }
 
 function displayUstensilsField(ustensilsArray) {
