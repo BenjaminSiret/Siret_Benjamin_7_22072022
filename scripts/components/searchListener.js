@@ -22,9 +22,12 @@ function searchListener(recipes) {
         const appliancesSearchResults = appliancesArray.filter(
           (element) => element.toLowerCase().includes(query)
         );
-        if (appliancesSearchResults) {
+        if (appliancesSearchResults.length) {
           displayAppliancesField(appliancesSearchResults);
           const newSearchResults = tagSearchRecipes(mainSearchResults, query);
+          displayRecipes(newSearchResults);
+        } else {
+          console.log("toto");
         }
       });
 
@@ -33,9 +36,10 @@ function searchListener(recipes) {
         let query = ustensilsSearchInput.value.toLowerCase().trim();
         const ustensilsArray = filterUstensils(mainSearchResults);
         const ustensilsSearchResults = ustensilsArray.filter((element) => element.toLowerCase().includes(query));
-        if (ustensilsSearchResults) {
+        if (ustensilsSearchResults.length) {
           displayUstensilsField(ustensilsSearchResults);
           const newSearchResults = tagSearchRecipes(mainSearchResults, query);
+          displayRecipes(newSearchResults);
         }
       });
 
@@ -44,9 +48,10 @@ function searchListener(recipes) {
         let query = ingredientsSearchInput.value.toLowerCase().trim();
         const ingredientsArray = filterIngredients(mainSearchResults);
         const ingredientsSearchResults = ingredientsArray.filter((element) => element.toLowerCase().includes(query));
-        if (ingredientsSearchResults) {
+        if (ingredientsSearchResults.length) {
           displayIngredientsField(ingredientsSearchResults);
           const newSearchResults = tagSearchRecipes(mainSearchResults, query);
+          displayRecipes(newSearchResults);
         }
       });
 
@@ -55,16 +60,15 @@ function searchListener(recipes) {
   });
 
 
-  tagListener(recipes);
+  //tagListener(recipes);
 }
 
 
 function tagListener(recipes) {
   const tags = document.querySelectorAll(".appliance-tag, .ustensil-tag, .ingredient-tag");
+  let tagArray = [];
   tags.forEach(tag => {
     tag.addEventListener("click", () => {
-      displayTag(tag);
-      const results = mainSearchRecipes(recipes, tag.textContent);
 
     });
   });
