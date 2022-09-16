@@ -1,4 +1,4 @@
-function searchRecipes(recipes, query) {
+function mainSearchRecipes(recipes, query) {
   const results = recipes.filter(
     (recipe) =>
       recipe.name.toLowerCase().includes(query) ||

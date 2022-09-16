@@ -11,6 +11,7 @@ async function init() {
   displayRecipes(recipes);
   displayAdvancedFields(recipes);
   searchListener(recipes);
+
 }
 
 init();

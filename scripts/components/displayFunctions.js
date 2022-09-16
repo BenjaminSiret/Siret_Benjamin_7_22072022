@@ -44,7 +44,7 @@ function displayAdvancedFields(recipes) {
     ingredientsList.appendChild(li);
   });
 
-  appliancesSection.classList.add("appliance-results");
+  appliancesSection.classList.add("appliances-results");
   appliancesSection.appendChild(appliancesList);
 
   ustensilsSection.classList.add("ustensils-results");
