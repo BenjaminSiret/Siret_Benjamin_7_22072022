@@ -54,44 +54,22 @@ function displayAdvancedFields(recipes) {
   ingredientsSection.appendChild(ingredientsList);
 }
 
-function displayAppliancesField(appliancesArray) {
-  const appliancesSection = document.getElementById("appliances-search");
-  appliancesSection.innerHTML = "";
-  const appliancesList = document.createElement("ul");
-  appliancesArray.forEach((element) => {
+
+function refreshAdvancedField(input, searchResults) {
+  console.log((input));
+  const inputSection = document.getElementById(input.id.replace("input", "search"));
+  inputSection.innerHTML = "";
+  const inputList = document.createElement("ul");
+  searchResults.forEach(element => {
     const li = document.createElement("li");
     li.textContent = `${element}`;
-    appliancesList.appendChild(li);
+    li.classList.add(`${input.id.replace("s-input", "-tag")}`);
+    inputList.appendChild(li);
   });
-  appliancesSection.classList.add("appliances-results");
-  appliancesSection.appendChild(appliancesList);
+  inputSection.classList.add(`${input.id.replace("input", "results")}`);
+  inputSection.appendChild(inputList);
 }
 
-function displayUstensilsField(ustensilsArray) {
-  const ustensilsSection = document.getElementById("ustensils-search");
-  ustensilsSection.innerHTML = "";
-  const ustensilsList = document.createElement("ul");
-  ustensilsArray.forEach((element) => {
-    const li = document.createElement("li");
-    li.textContent = `${element}`;
-    ustensilsList.appendChild(li);
-  });
-  ustensilsSection.classList.add("ustensils-results");
-  ustensilsSection.appendChild(ustensilsList);
-}
-
-function displayIngredientsField(ingredientsArray) {
-  const ingredientsSection = document.getElementById("ingredients-search");
-  ingredientsSection.innerHTML = "";
-  const ingredientsList = document.createElement("ul");
-  ingredientsArray.forEach((element) => {
-    const li = document.createElement("li");
-    li.textContent = `${element}`;
-    ingredientsList.appendChild(li);
-  });
-  ingredientsSection.classList.add("ingredients-results");
-  ingredientsSection.appendChild(ingredientsList);
-}
 
 function displayTag(tag) {
   const tagsSection = document.querySelector(".tags-section");
@@ -110,12 +88,5 @@ function displayTag(tag) {
   }
   selectedTag.classList.add("selected-tag");
   tagsSection.appendChild(selectedTag);
-
-  // close tags
-  document.querySelectorAll(".cross").forEach(cross => {
-    cross.addEventListener('click', (e) => {
-      e.target.parentElement.remove();
-    });
-  });
 }
 
