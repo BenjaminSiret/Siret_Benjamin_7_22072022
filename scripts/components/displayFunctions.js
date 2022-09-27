@@ -54,13 +54,13 @@ function displayAdvancedFields(recipes) {
   ingredientsSection.appendChild(ingredientsList);
 }
 
-
 function refreshAdvancedField(input, searchResults) {
-  console.log((input));
-  const inputSection = document.getElementById(input.id.replace("input", "search"));
+  const inputSection = document.getElementById(
+    input.id.replace("input", "search")
+  );
   inputSection.innerHTML = "";
   const inputList = document.createElement("ul");
-  searchResults.forEach(element => {
+  searchResults.forEach((element) => {
     const li = document.createElement("li");
     li.textContent = `${element}`;
     li.classList.add(`${input.id.replace("s-input", "-tag")}`);
@@ -70,11 +70,10 @@ function refreshAdvancedField(input, searchResults) {
   inputSection.appendChild(inputList);
 }
 
-
 function displayTag(tag) {
   const tagsSection = document.querySelector(".tags-section");
   const selectedTag = document.createElement("div");
-  selectedTag.innerHTML = `<span>${tag.textContent}</span><img src='./assets/cross.png' class="cross">`;
+  selectedTag.innerHTML = `<span>${tag.textContent}</span><img src='./assets/cross.png' class="cross" onClick="removeTag(this)">`;
   switch (tag.className) {
     case "appliance-tag":
       selectedTag.style.backgroundColor = "#68d9a4";
@@ -90,3 +89,7 @@ function displayTag(tag) {
   tagsSection.appendChild(selectedTag);
 }
 
+function removeTag(el) {
+  const element = el;
+  element.parentElement.remove();
+}
