@@ -18,9 +18,7 @@ function searchListener(recipes) {
       mainSearchResults = mainSearchRecipes(recipes, query);
       if (!mainSearchResults.length) {
         //TODO: afficher message d'alert à la place du console.log
-        alert(
-          "Aucune recette ne correspond à votre recette, vous pouvez chercher 'tarte aux pommes', 'poisson', ..."
-        );
+        displayErrorMessage();
       } else {
         document.querySelector(".results").innerHTML = "";
         displayRecipes(mainSearchResults);
@@ -63,7 +61,7 @@ function searchListener(recipes) {
         acc.filter((element) => cur.includes(element))
       );
       if (!tagsSearchResults.length) {
-        alert("pas de résultats avec ces critères de recherche");
+        displayErrorMessage();
       } else {
         displayRecipes(tagsSearchResults);
       }

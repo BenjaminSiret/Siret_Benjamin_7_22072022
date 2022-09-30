@@ -93,3 +93,8 @@ function removeTag(el) {
   const element = el;
   element.parentElement.remove();
 }
+
+function displayErrorMessage() {
+  const results = document.querySelector(".results");
+  results.innerHTML = `<p class="error-message">"Aucune recette ne correspond à votre critère... vous pouvez chercher « tarte aux pommes », « poisson », etc..."</p>`;
+}

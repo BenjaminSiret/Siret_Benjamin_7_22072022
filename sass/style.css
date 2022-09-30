@@ -10,6 +10,11 @@ p {
   padding: 0;
 }
 
+body {
+  max-width: 1200px;
+  margin: auto;
+}
+
 .header {
   text-align: center;
   margin-top: 40px;
@@ -21,7 +26,6 @@ p {
 }
 
 .search {
-  width: 1240px;
   margin: auto;
 }
 .search .search-bar {
@@ -141,10 +145,15 @@ p {
 }
 
 .results {
-  width: 1240px;
   margin: auto;
   display: grid;
   grid-template-columns: 1fr 1fr auto;
+}
+
+.error-message {
+  grid-column: span 2;
+  font-size: 20px;
+  text-align: center;
 }
 
 .card {
