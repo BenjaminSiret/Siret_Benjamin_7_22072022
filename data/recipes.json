@@ -178,7 +178,7 @@
         {
           "ingredient": "Moutarde de Dijon",
           "quantity": 1,
-          "unite": "cuillères à soupe"
+          "unit": "cuillère à soupe"
         }
       ],
       "time": 45,

@@ -150,6 +150,7 @@ p {
 .card {
   width: 380px;
   height: 364px;
+  margin-bottom: 60px;
 }
 .card-img {
   background-color: #c7bebe;
@@ -160,6 +161,7 @@ p {
   background-color: #e7e7e7;
   border-radius: 0 0 5px 5px;
   padding: 18px;
+  height: 180px;
 }
 .card-content-header {
   display: flex;
@@ -171,11 +173,16 @@ p {
   font-family: "Lato";
   font-size: 18px;
   font-weight: 400;
+  max-width: 245px;
+}
+.card-content-header .recipe-duration {
+  display: flex;
 }
 .card-content-header .recipe-time {
   font-family: "Lato";
   font-weight: 700;
   font-size: 18px;
+  margin-left: 8px;
 }
 .card-content-text {
   display: flex;
@@ -187,7 +194,9 @@ p {
   font-family: "Lato";
 }
 .card-content-text .recipe-text {
+  max-height: 122px;
   width: 171px;
   font-family: "Roboto";
   font-weight: 400;
+  overflow: hidden;
 }/*# sourceMappingURL=style.css.map */
