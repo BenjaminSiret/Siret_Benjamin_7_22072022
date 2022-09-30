@@ -8,7 +8,7 @@ function displayRecipes(recipes) {
   });
 }
 
-function displayAdvancedFields(recipes) {
+function fillAdvancedFields(recipes) {
   const appliancesSection = document.getElementById("appliances-search");
   const ustensilsSection = document.getElementById("ustensils-search");
   const ingredientsSection = document.getElementById("ingredients-search");
@@ -24,6 +24,8 @@ function displayAdvancedFields(recipes) {
   const appliancesList = document.createElement("ul");
   const ustensilsList = document.createElement("ul");
   const ingredientsList = document.createElement("ul");
+
+  ingredientsList.classList.add("ingredients-tags-list");
 
   appliancesArray.forEach((element) => {
     const li = document.createElement("li");
@@ -44,13 +46,13 @@ function displayAdvancedFields(recipes) {
     ingredientsList.appendChild(li);
   });
 
-  appliancesSection.classList.add("appliances-results");
+  appliancesSection.classList.add("appliances-tags-container");
   appliancesSection.appendChild(appliancesList);
 
-  ustensilsSection.classList.add("ustensils-results");
+  ustensilsSection.classList.add("ustensils-tags-container");
   ustensilsSection.appendChild(ustensilsList);
 
-  ingredientsSection.classList.add("ingredients-results");
+  ingredientsSection.classList.add("ingredients-tags-container");
   ingredientsSection.appendChild(ingredientsList);
 }
 
@@ -97,4 +99,9 @@ function removeTag(el) {
 function displayErrorMessage() {
   const results = document.querySelector(".results");
   results.innerHTML = `<p class="error-message">"Aucune recette ne correspond à votre critère... vous pouvez chercher « tarte aux pommes », « poisson », etc..."</p>`;
+}
+
+function displayIngredientsField() {
+  const ingredientsField = document.querySelector(".ingredients-tags");
+  ingredientsField.style.display = "block";
 }

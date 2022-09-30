@@ -5,7 +5,7 @@ let mainSearchResults = [];
 
 //TODO: ajouter des commentaires pour expliquer le code
 
-function searchListener(recipes) {
+function globalListener(recipes) {
   // base listeners
   advancedFieldsListener(recipes);
   tagListener();
@@ -17,12 +17,11 @@ function searchListener(recipes) {
     if (query.length > 2) {
       mainSearchResults = mainSearchRecipes(recipes, query);
       if (!mainSearchResults.length) {
-        //TODO: afficher message d'alert à la place du console.log
         displayErrorMessage();
       } else {
         document.querySelector(".results").innerHTML = "";
         displayRecipes(mainSearchResults);
-        displayAdvancedFields(mainSearchResults);
+        fillAdvancedFields(mainSearchResults);
         results = true;
       }
       advancedFieldsListener(mainSearchResults);
@@ -37,38 +36,44 @@ function searchListener(recipes) {
     const tagsArray = newTags.map((tag) => tag.textContent);
     const tagsSearchArray = [];
     // si il y a déjà un résultat de recherche, la recherche par tag est faite à partir de ces résultats
-    if (results && newTags.length) {
-      tagsArray.forEach((tag) => {
-        const tagSearchResult = tagSearchRecipes(mainSearchResults, tag);
-        tagsSearchArray.push(tagSearchResult);
-      });
-      const tagsSearchResults = tagsSearchArray.reduce((acc, cur) =>
-        acc.filter((element) => cur.includes(element))
-      );
-      if (!tagsSearchResults.length) {
-        alert("pas de résultats avec ces critères de recherche");
-      } else {
+    if (results) {
+      if (newTags.length) {
+        tagsArray.forEach((tag) => {
+          const tagSearchResult = tagSearchRecipes(mainSearchResults, tag);
+          tagsSearchArray.push(tagSearchResult);
+        });
+        const tagsSearchResults = tagsSearchArray.reduce((acc, cur) =>
+          acc.filter((element) => cur.includes(element))
+        );
         displayRecipes(tagsSearchResults);
+        fillAdvancedFields(tagsSearchResults);
+      } else {
+        displayRecipes(mainSearchResults);
+        fillAdvancedFields(mainSearchResults);
       }
+      advancedFieldsListener(mainSearchResults);
+      tagListener();
     }
+
     // si il n'y a pas de résultats de recherche, la recherche par tag est faite sur toutes les recettes
-    else if (!results && newTags.length) {
-      tagsArray.forEach((tag) => {
-        const tagSearchResult = tagSearchRecipes(recipes, tag);
-        tagsSearchArray.push(tagSearchResult);
-      });
-      const tagsSearchResults = tagsSearchArray.reduce((acc, cur) =>
-        acc.filter((element) => cur.includes(element))
-      );
-      if (!tagsSearchResults.length) {
-        displayErrorMessage();
-      } else {
+    else if (!results) {
+      if (newTags.length) {
+        tagsArray.forEach((tag) => {
+          const tagSearchResult = tagSearchRecipes(recipes, tag);
+          tagsSearchArray.push(tagSearchResult);
+        });
+        const tagsSearchResults = tagsSearchArray.reduce((acc, cur) =>
+          acc.filter((element) => cur.includes(element))
+        );
         displayRecipes(tagsSearchResults);
+        fillAdvancedFields(tagsSearchResults);
+        advancedFieldsListener(recipes);
+        tagListener();
+      } else {
+        displayRecipes(recipes);
+        fillAdvancedFields(recipes);
+        tagListener();
       }
-    }
-    // si il n'y a pas d'actions, toutes les recettes sont affichées
-    else {
-      displayRecipes(recipes);
     }
   });
   observer.observe(tagsSection, { childList: true });

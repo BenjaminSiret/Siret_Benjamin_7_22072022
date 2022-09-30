@@ -53,30 +53,23 @@
     display: flex;
 
     &-button {
-      //display: flex;
+      display: flex;
       align-items: center;
       padding: 0px 15px 0px 15px;
       font-family: "Lato", sans-serif;
       font-size: 18px;
-      width: 170px;
+      min-width: 170px;
       min-height: 69px;
+      width: fit-content;
+      height: fit-content;
       border-radius: 5px;
       border: none;
       color: white;
       margin-right: 20px;
 
+      background-color: #3282f7;
       &::placeholder {
         color: white;
-      }
-
-      &:nth-of-type(1) {
-        background-color: #3282f7;
-      }
-      &:nth-of-type(2) {
-        background-color: #68d9a4;
-      }
-      &:nth-of-type(3) {
-        background-color: #ed6454;
       }
     }
 
@@ -88,6 +81,11 @@
       background-color: transparent;
       border: none;
 
+      &-container {
+        display: flex;
+        padding-top: 20px;
+      }
+
       &::placeholder {
         color: white;
         opacity: 1;
@@ -97,13 +95,13 @@
     i {
       height: fit-content;
     }
-  }
 
-  .appliances-results,
-  .ustensils-results,
-  .ingredients-results {
-    width: fit-content;
-    height: fit-content;
-    cursor: pointer;
+    .appliances-color {
+      background-color: #68d9a4;
+    }
+
+    .ustensils-color {
+      background-color: #ed6454;
+    }
   }
 }
