@@ -107,4 +107,23 @@ function advancedFieldsListener(recipes) {
       }
     });
   });
+
+
+  const chevrons = document.querySelectorAll(".fa-chevron-down");
+
+  chevrons.forEach(chevron => {
+    chevron.addEventListener("click", (e) => {
+      chevron.classList.toggle("rotate");
+      e.target.parentElement.classList.toggle("active");
+      const searchContainer = e.target.parentElement.nextElementSibling;
+
+      if (searchContainer.style.display === "block") {
+        searchContainer.style.display = "none";
+      } else {
+        searchContainer.style.display = "block";
+      }
+    });
+  });
 }
+
+

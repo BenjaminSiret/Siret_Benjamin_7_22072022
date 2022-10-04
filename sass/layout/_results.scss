@@ -14,5 +14,32 @@
 .ustensils-tags-container,
 .ingredients-tags-container {
   cursor: pointer;
-  margin-top: 60px;
+  background-color: #3282f7;
+  color: white;
+  display: none;
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    max-height: 500px;
+    flex-wrap: wrap;
+  }
+}
+
+.ingredients-tags-container {
+  background-color: #3282f7;
+  margin-top: -5px;
+  padding-top: 10px;
+}
+
+.appliances-tags-container {
+  background-color: #68d9a4;
+  margin-top: -5px;
+  padding-top: 10px;
+}
+
+.ustensils-tags-container {
+  background-color: #ed6454;
+  margin-top: -5px;
+  padding-top: 10px;
 }
