@@ -99,7 +99,7 @@ function advancedFieldsListener(recipes) {
     "#appliances-input, #ustensils-input, #ingredients-input"
   );
   inputsArray.forEach((input) => {
-    input.addEventListener("keyup", () => {
+    input.addEventListener("keyup", (e) => {
       let query = input.value.toLowerCase().trim();
       const filteredArray = filter(recipes, input.id);
       const searchResults = filteredArray.filter((element) =>
@@ -109,6 +109,15 @@ function advancedFieldsListener(recipes) {
         refreshAdvancedField(input, searchResults);
         tagListener();
       }
+      //TODO: continuer l'implémenation pour les autres champs
+      if (e.target.parentElement.parentElement.className === "ingredients-field") {
+        e.target.parentElement.classList.add("ingredients-active");
+        if (e.target.textLength === 0) {
+          e.target.parentElement.classList.remove("ingredients-active");
+        }
+      }
+
+
     });
   });
 
@@ -120,20 +129,11 @@ function advancedFieldsListener(recipes) {
     chevron.addEventListener("click", (e) => {
       chevron.classList.toggle("rotate");
 
-      // la classe est adaptée en fonction du champ avancé
-      switch (e.target.parentElement.parentElement.className) {
-        case "ingredients-field":
-          e.target.parentElement.classList.toggle("ingredients-active");
-          break;
-        case "ustensils-active":
-          e.target.parentElement.classList.toggle('ustensils-active');
-          break;
-        default:
-          e.target.parentElement.classList.toggle("active");
-          break;
-      }
+      // la classe et le placeholder sont adaptés en fonction du champ avancé
+      changeInputClass(e);
+      changePlaceholder(e);
 
-      // on affiche la liste si est masquée, on la masque si elle est affichée
+      // on affiche la liste si est masquée, on la masque si elle est affichée, le placeholder est adapté
       const advancedList = e.target.parentElement.nextElementSibling;
       if (advancedList.style.display === "block") {
         advancedList.style.display = "none";
@@ -142,6 +142,48 @@ function advancedFieldsListener(recipes) {
       }
     });
   });
+}
+
+
+function changeInputClass(event) {
+  switch (event.target.parentElement.parentElement.className) {
+    case "ingredients-field":
+      event.target.parentElement.classList.toggle("ingredients-active");
+      break;
+    case "appliances-field":
+      event.target.parentElement.classList.toggle("appliances-active");
+      break;
+    case "ustensils-field":
+      event.target.parentElement.classList.toggle('ustensils-active');
+      break;
+  }
+}
+
+function changePlaceholder(event) {
+  let fieldInput = event.target.parentElement.children[0];
+  switch (event.target.parentElement.parentElement.className) {
+    case "ingredients-field":
+      if (fieldInput.placeholder === "Ingredients") {
+        fieldInput.placeholder = "Recherchez un ingrédient";
+      } else {
+        fieldInput.placeholder = "Ingredients";
+      }
+      break;
+    case "appliances-field":
+      if (fieldInput.placeholder === "Appareils") {
+        fieldInput.placeholder = "Recherchez un appareil";
+      } else {
+        fieldInput.placeholder = "Appareils";
+      }
+      break;
+    case "ustensils-field":
+      if (fieldInput.placeholder === "Ustensiles") {
+        fieldInput.placeholder = "Recherchez un ustensile";
+      } else {
+        fieldInput.placeholder = "Ustensiles";
+      }
+      break;
+  }
 }
 
 
