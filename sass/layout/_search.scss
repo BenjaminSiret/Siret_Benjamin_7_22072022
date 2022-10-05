@@ -76,7 +76,11 @@
       font-weight: 700;
       font-size: 18px;
       background-color: transparent;
+      color: white;
       border: none;
+      &:focus {
+        outline: none;
+      }
 
       &-container {
         display: flex;
@@ -101,12 +105,4 @@
       background-color: #ed6454;
     }
   }
-}
-
-.rotate {
-  transform: rotate(180deg);
-}
-
-.active {
-  width: 700px;
 }

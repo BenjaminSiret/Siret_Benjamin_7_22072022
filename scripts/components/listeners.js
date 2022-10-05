@@ -3,6 +3,10 @@ let tagSearchArray = [];
 let results = false;
 let mainSearchResults = [];
 
+// const ingredientsInput = document.getElementById("ingredients-input");
+// const appliancesInput = document.getElementById("appliances-input");
+// const ustensilsInput = document.getElementById("ustensils-input");
+
 //TODO: ajouter des commentaires pour expliquer le code
 
 function globalListener(recipes) {
@@ -108,19 +112,33 @@ function advancedFieldsListener(recipes) {
     });
   });
 
+  // ouverture / fermeture des dropdown
 
   const chevrons = document.querySelectorAll(".fa-chevron-down");
 
   chevrons.forEach(chevron => {
     chevron.addEventListener("click", (e) => {
       chevron.classList.toggle("rotate");
-      e.target.parentElement.classList.toggle("active");
-      const searchContainer = e.target.parentElement.nextElementSibling;
 
-      if (searchContainer.style.display === "block") {
-        searchContainer.style.display = "none";
+      // la classe est adaptée en fonction du champ avancé
+      switch (e.target.parentElement.parentElement.className) {
+        case "ingredients-field":
+          e.target.parentElement.classList.toggle("ingredients-active");
+          break;
+        case "ustensils-active":
+          e.target.parentElement.classList.toggle('ustensils-active');
+          break;
+        default:
+          e.target.parentElement.classList.toggle("active");
+          break;
+      }
+
+      // on affiche la liste si est masquée, on la masque si elle est affichée
+      const advancedList = e.target.parentElement.nextElementSibling;
+      if (advancedList.style.display === "block") {
+        advancedList.style.display = "none";
       } else {
-        searchContainer.style.display = "block";
+        advancedList.style.display = "block";
       }
     });
   });

@@ -14,32 +14,46 @@
 .ustensils-tags-container,
 .ingredients-tags-container {
   cursor: pointer;
-  background-color: #3282f7;
   color: white;
   display: none;
+  margin-top: -5px;
+  padding-top: 10px;
 
   ul {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
     max-height: 500px;
-    flex-wrap: wrap;
+    overflow: scroll;
+    padding: 10px;
+    font-family: "Lato", sans-serif;
+    font-size: 18px;
+  }
+
+  li {
+    margin-top: 10px;
   }
 }
 
 .ingredients-tags-container {
   background-color: #3282f7;
-  margin-top: -5px;
-  padding-top: 10px;
 }
 
 .appliances-tags-container {
   background-color: #68d9a4;
-  margin-top: -5px;
-  padding-top: 10px;
 }
 
 .ustensils-tags-container {
   background-color: #ed6454;
-  margin-top: -5px;
-  padding-top: 10px;
+}
+
+.rotate {
+  transform: rotate(180deg);
+}
+
+.ingredients-active {
+  width: 700px;
+}
+
+.ustensils-active {
+  width: 500px;
 }
