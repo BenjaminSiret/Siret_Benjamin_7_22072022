@@ -109,12 +109,47 @@ function advancedFieldsListener(recipes) {
         refreshAdvancedField(input, searchResults);
         tagListener();
       }
+
       //TODO: continuer l'implémenation pour les autres champs
-      if (e.target.parentElement.parentElement.className === "ingredients-field") {
-        e.target.parentElement.classList.add("ingredients-active");
-        if (e.target.textLength === 0) {
-          e.target.parentElement.classList.remove("ingredients-active");
-        }
+      let field = e.target.parentElement.parentElement;
+      let button = e.target.parentElement;
+      let chevron = e.target.nextElementSibling;
+      let tagsList = e.target.parentElement.nextElementSibling;
+
+      switch (field.className) {
+        case "ingredients-field":
+          button.classList.add("ingredients-active");
+          chevron.classList.add("rotate");
+          tagsList.style.display = "block";
+          if (e.target.textLength === 0) {
+            button.classList.remove("ingredients-active");
+            chevron.classList.remove("rotate");
+            tagsList.style.display = "none";
+          }
+          break;
+        case "appliances-field":
+          button.classList.add("appliances-active");
+          chevron.classList.add("rotate");
+          tagsList.style.display = "block";
+          if (e.target.textLength === 0) {
+            button.classList.remove("appliances-active");
+            chevron.classList.remove("rotate");
+            tagsList.style.display = "none";
+          }
+          break;
+        case "ustensils-field":
+          button.classList.add("ustensils-active");
+          chevron.classList.add("rotate");
+          tagsList.style.display = "block";
+          if (e.target.textLength === 0) {
+            button.classList.remove("ustensils-active");
+            chevron.classList.remove("rotate");
+            tagsList.style.display = "none";
+          }
+          break;
+
+
+
       }
 
 
