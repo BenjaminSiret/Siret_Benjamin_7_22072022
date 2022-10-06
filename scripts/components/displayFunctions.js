@@ -30,19 +30,19 @@ function fillAdvancedFields(recipes) {
   appliancesArray.forEach((element) => {
     const li = document.createElement("li");
     li.textContent = `${element}`;
-    li.classList.add("appliance-tag");
+    li.classList.add("appliances-tag");
     appliancesList.appendChild(li);
   });
   ustensilsArray.forEach((element) => {
     const li = document.createElement("li");
     li.textContent = `${element}`;
-    li.classList.add("ustensil-tag");
+    li.classList.add("ustensils-tag");
     ustensilsList.appendChild(li);
   });
   ingredientsArray.forEach((element) => {
     const li = document.createElement("li");
     li.textContent = `${element}`;
-    li.classList.add("ingredient-tag");
+    li.classList.add("ingredients-tag");
     ingredientsList.appendChild(li);
   });
 
@@ -65,7 +65,7 @@ function refreshAdvancedField(input, searchResults) {
   searchResults.forEach((element) => {
     const li = document.createElement("li");
     li.textContent = `${element}`;
-    li.classList.add(`${input.id.replace("s-input", "-tag")}`);
+    li.classList.add(`${input.id.replace("-input", "-tag")}`);
     inputList.appendChild(li);
   });
   inputSection.classList.add(`${input.id.replace("input", "results")}`);
@@ -77,13 +77,13 @@ function displayTag(tag) {
   const selectedTag = document.createElement("div");
   selectedTag.innerHTML = `<span>${tag.textContent}</span><img src='./assets/cross.png' class="cross" onClick="removeTag(this)">`;
   switch (tag.className) {
-    case "appliance-tag":
+    case "appliances-tag":
       selectedTag.style.backgroundColor = "#68d9a4";
       break;
-    case "ustensil-tag":
+    case "ustensils-tag":
       selectedTag.style.backgroundColor = "#ed6454";
       break;
-    case "ingredient-tag":
+    case "ingredients-tag":
       selectedTag.style.backgroundColor = "#3282f7";
       break;
   }

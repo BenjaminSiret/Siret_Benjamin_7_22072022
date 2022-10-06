@@ -26,10 +26,13 @@ function globalListener(recipes) {
         document.querySelector(".results").innerHTML = "";
         displayRecipes(mainSearchResults);
         fillAdvancedFields(mainSearchResults);
+        advancedFieldsListener(mainSearchResults);
         results = true;
       }
       advancedFieldsListener(mainSearchResults);
       tagListener();
+    } else {
+      displayRecipes(recipes);
     }
   });
 
@@ -51,9 +54,12 @@ function globalListener(recipes) {
         );
         displayRecipes(tagsSearchResults);
         fillAdvancedFields(tagsSearchResults);
+        advancedFieldsListener(tagsSearchResults);
       } else {
         displayRecipes(mainSearchResults);
         fillAdvancedFields(mainSearchResults);
+        advancedFieldsListener(mainSearchResults);
+        tagListener();
       }
       advancedFieldsListener(mainSearchResults);
       tagListener();
@@ -71,11 +77,12 @@ function globalListener(recipes) {
         );
         displayRecipes(tagsSearchResults);
         fillAdvancedFields(tagsSearchResults);
-        advancedFieldsListener(recipes);
+        advancedFieldsListener(tagsSearchResults);
         tagListener();
       } else {
         displayRecipes(recipes);
         fillAdvancedFields(recipes);
+        advancedFieldsListener(recipes);
         tagListener();
       }
     }
@@ -85,7 +92,7 @@ function globalListener(recipes) {
 
 function tagListener() {
   const tags = document.querySelectorAll(
-    ".appliance-tag, .ustensil-tag, .ingredient-tag"
+    ".appliances-tag, .ustensils-tag, .ingredients-tag"
   );
   tags.forEach((tag) => {
     tag.addEventListener("click", () => {
@@ -99,7 +106,7 @@ function advancedFieldsListener(recipes) {
     "#appliances-input, #ustensils-input, #ingredients-input"
   );
   inputsArray.forEach((input) => {
-    input.addEventListener("keyup", (e) => {
+    input.addEventListener("keyup", () => {
       let query = input.value.toLowerCase().trim();
       const filteredArray = filter(recipes, input.id);
       const searchResults = filteredArray.filter((element) =>
@@ -110,18 +117,18 @@ function advancedFieldsListener(recipes) {
         tagListener();
       }
 
-      //TODO: continuer l'implémenation pour les autres champs
-      let field = e.target.parentElement.parentElement;
-      let button = e.target.parentElement;
-      let chevron = e.target.nextElementSibling;
-      let tagsList = e.target.parentElement.nextElementSibling;
+      let field = input.parentElement.parentElement;
+      let button = input.parentElement;
+      let chevron = input.nextElementSibling;
+      let tagsList = input.parentElement.nextElementSibling;
 
+      // on ouvre la dropdown et on tourne le chevron quand saisie utilisateur <=> et inversement
       switch (field.className) {
         case "ingredients-field":
           button.classList.add("ingredients-active");
           chevron.classList.add("rotate");
           tagsList.style.display = "block";
-          if (e.target.textLength === 0) {
+          if (input.textLength === 0) {
             button.classList.remove("ingredients-active");
             chevron.classList.remove("rotate");
             tagsList.style.display = "none";
@@ -131,7 +138,7 @@ function advancedFieldsListener(recipes) {
           button.classList.add("appliances-active");
           chevron.classList.add("rotate");
           tagsList.style.display = "block";
-          if (e.target.textLength === 0) {
+          if (input.textLength === 0) {
             button.classList.remove("appliances-active");
             chevron.classList.remove("rotate");
             tagsList.style.display = "none";
@@ -141,62 +148,77 @@ function advancedFieldsListener(recipes) {
           button.classList.add("ustensils-active");
           chevron.classList.add("rotate");
           tagsList.style.display = "block";
-          if (e.target.textLength === 0) {
+          if (input.textLength === 0) {
             button.classList.remove("ustensils-active");
             chevron.classList.remove("rotate");
             tagsList.style.display = "none";
           }
           break;
-
-
-
       }
-
-
     });
   });
 
-  // ouverture / fermeture des dropdown
+  // ouverture / fermeture des dropdown au chevron
 
   const chevrons = document.querySelectorAll(".fa-chevron-down");
-
   chevrons.forEach(chevron => {
-    chevron.addEventListener("click", (e) => {
+    chevron.addEventListener("click", () => {
       chevron.classList.toggle("rotate");
 
-      // la classe et le placeholder sont adaptés en fonction du champ avancé
-      changeInputClass(e);
-      changePlaceholder(e);
+      // la classe de l'input est adaptée en fonction du champ avancé
+      changeInputClass(chevron);
+      changePlaceholder(chevron);
+
+      //TODO: tester et trouver pourquoi le chevron bug parfois + voir toutes les configurations de recherche possibles
 
       // on affiche la liste si est masquée, on la masque si elle est affichée, le placeholder est adapté
-      const advancedList = e.target.parentElement.nextElementSibling;
+      const advancedList = chevron.parentElement.nextElementSibling;
       if (advancedList.style.display === "block") {
         advancedList.style.display = "none";
+        chevron.parentElement.children[0].value = "";
+        switch (chevron.parentElement.parentElement.className) {
+          case "ingredients-field":
+            chevron.parentElement.children[0].placeholder = "Ingredients";
+            break;
+
+          case "appliances-field":
+            chevron.parentElement.children[0].placeholder = "Appareils";
+            break;
+
+          case "ustensils-field":
+            chevron.parentElement.children[0].placeholder = "Ustensils";
+            break;
+        }
+
+        // quand on referme un champ de recherche sans selectionner de tag => on le remet à "0"
+
+
       } else {
         advancedList.style.display = "block";
       }
     });
   });
+
 }
 
 
-function changeInputClass(event) {
-  switch (event.target.parentElement.parentElement.className) {
+function changeInputClass(input) {
+  switch (input.parentElement.parentElement.className) {
     case "ingredients-field":
-      event.target.parentElement.classList.toggle("ingredients-active");
+      input.parentElement.classList.toggle("ingredients-active");
       break;
     case "appliances-field":
-      event.target.parentElement.classList.toggle("appliances-active");
+      input.parentElement.classList.toggle("appliances-active");
       break;
     case "ustensils-field":
-      event.target.parentElement.classList.toggle('ustensils-active');
+      input.parentElement.classList.toggle('ustensils-active');
       break;
   }
 }
 
-function changePlaceholder(event) {
-  let fieldInput = event.target.parentElement.children[0];
-  switch (event.target.parentElement.parentElement.className) {
+function changePlaceholder(input) {
+  let fieldInput = input.parentElement.children[0];
+  switch (input.parentElement.parentElement.className) {
     case "ingredients-field":
       if (fieldInput.placeholder === "Ingredients") {
         fieldInput.placeholder = "Recherchez un ingrédient";
