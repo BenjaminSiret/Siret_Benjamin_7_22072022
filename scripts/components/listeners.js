@@ -3,9 +3,6 @@ let tagSearchArray = [];
 let results = false;
 let mainSearchResults = [];
 
-// const ingredientsInput = document.getElementById("ingredients-input");
-// const appliancesInput = document.getElementById("appliances-input");
-// const ustensilsInput = document.getElementById("ustensils-input");
 
 //TODO: ajouter des commentaires pour expliquer le code
 
@@ -22,6 +19,7 @@ function globalListener(recipes) {
       mainSearchResults = mainSearchRecipes(recipes, query);
       if (!mainSearchResults.length) {
         displayErrorMessage();
+        results = false;
       } else {
         document.querySelector(".results").innerHTML = "";
         displayRecipes(mainSearchResults);
@@ -33,10 +31,11 @@ function globalListener(recipes) {
       tagListener();
     } else {
       displayRecipes(recipes);
+      results = false;
     }
   });
 
-  // tags-section observer
+
   const tagsSection = document.querySelector(".tags-section");
   const observer = new MutationObserver(() => {
     const newTags = Array.from(document.querySelectorAll(".selected-tag"));
@@ -44,6 +43,7 @@ function globalListener(recipes) {
     const tagsSearchArray = [];
     // si il y a déjà un résultat de recherche, la recherche par tag est faite à partir de ces résultats
     if (results) {
+      console.log(results);
       if (newTags.length) {
         tagsArray.forEach((tag) => {
           const tagSearchResult = tagSearchRecipes(mainSearchResults, tag);
@@ -67,6 +67,7 @@ function globalListener(recipes) {
 
     // si il n'y a pas de résultats de recherche, la recherche par tag est faite sur toutes les recettes
     else if (!results) {
+      console.log(results);
       if (newTags.length) {
         tagsArray.forEach((tag) => {
           const tagSearchResult = tagSearchRecipes(recipes, tag);
@@ -158,8 +159,7 @@ function advancedFieldsListener(recipes) {
     });
   });
 
-  // ouverture / fermeture des dropdown au chevron
-
+  // ouverture / fermeture des dropdown au click sur un chevron
   const chevrons = document.querySelectorAll(".fa-chevron-down");
   chevrons.forEach(chevron => {
     chevron.addEventListener("click", () => {
@@ -168,8 +168,6 @@ function advancedFieldsListener(recipes) {
       // la classe de l'input est adaptée en fonction du champ avancé
       changeInputClass(chevron);
       changePlaceholder(chevron);
-
-      //TODO: tester et trouver pourquoi le chevron bug parfois + voir toutes les configurations de recherche possibles
 
       // on affiche la liste si est masquée, on la masque si elle est affichée, le placeholder est adapté
       const advancedList = chevron.parentElement.nextElementSibling;
@@ -191,14 +189,12 @@ function advancedFieldsListener(recipes) {
         }
 
         // quand on referme un champ de recherche sans selectionner de tag => on le remet à "0"
-
-
+        fillAdvancedFields(recipes);
       } else {
         advancedList.style.display = "block";
       }
     });
   });
-
 }
 
 
