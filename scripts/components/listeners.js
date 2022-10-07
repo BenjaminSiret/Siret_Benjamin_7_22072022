@@ -24,6 +24,7 @@ function globalListener(recipes) {
       if (!mainSearchResults.length) {
         displayErrorMessage(); // message d'erreur si pas de recette trouvée
       } else {
+        fillAdvancedFields(mainSearchResults); // on actualise les tags
         displayRecipes(mainSearchResults);
       }
     }
@@ -34,6 +35,7 @@ function globalListener(recipes) {
       if (!mainSearchResults.length) {
         displayErrorMessage();
       } else {
+        fillAdvancedFields(mainSearchResults);
         displayRecipes(mainSearchResults);
       }
     }
@@ -41,6 +43,7 @@ function globalListener(recipes) {
     // saisie < 2 caractères && pas de tag selectionné => on vide les résultats de recherche principale et on affiche toutes les recettes
     else if (query.length <= 2 && !newTags.length) {
       mainSearchResults = [];
+      fillAdvancedFields(recipes);
       displayRecipes(recipes);
     }
 
@@ -56,6 +59,7 @@ function globalListener(recipes) {
       tagsSearchResults = tagsSearchArray.reduce((acc, cur) =>
         acc.filter((element) => cur.includes(element))
       );
+      fillAdvancedFields(tagsSearchResults);
       displayRecipes(tagsSearchResults);
     }
   });
@@ -77,6 +81,7 @@ function globalListener(recipes) {
       tagsSearchResults = tagsSearchArray.reduce((acc, cur) =>
         acc.filter((element) => cur.includes(element))
       );
+      fillAdvancedFields(tagsSearchResults);
       displayRecipes(tagsSearchResults);
     }
 
@@ -89,12 +94,14 @@ function globalListener(recipes) {
       tagsSearchResults = tagsSearchArray.reduce((acc, cur) =>
         acc.filter((element) => cur.includes(element))
       );
+      fillAdvancedFields(tagsSearchResults);
       displayRecipes(tagsSearchResults);
     }
 
     // pas de tags selectionnés && résultats de recherche principale => on vide les résultats par tag et on affiche les résultats de recherche principale
     else if (!newTags.length && mainSearchResults.length) {
       tagsSearchResults = [];
+      fillAdvancedFields(mainSearchResults);
       displayRecipes(mainSearchResults);
     }
 
@@ -102,6 +109,7 @@ function globalListener(recipes) {
     else {
       tagsSearchResults = [];
       mainSearchResults = [];
+      fillAdvancedFields(recipes);
       displayRecipes(recipes);
     }
   });
@@ -206,9 +214,8 @@ function advancedFieldsListener(recipes) {
         }
         advancedList.style.display = "none";
         // quand on referme un champ de recherche sans selectionner de tag => on le remet à "0"
-        fillAdvancedFields(recipes);
+
       } else {
-        fillAdvancedFields(recipes);
         tagListener();
         advancedList.style.display = "block";
         switch (chevron.parentElement.parentElement.className) {
