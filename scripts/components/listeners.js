@@ -7,11 +7,12 @@ let newTags = [];
 let tagsArray = [];
 let tagsSearchArray = [];
 
+
 function globalListener(recipes) {
 
   // listener sur les champs avancés
   advancedFieldsListener(recipes);
-
+  tagListener();
   // RECHERCHE PRINCIPALE
   const searchInput = document.getElementById("search-input");
   searchInput.addEventListener("keyup", () => {
@@ -25,6 +26,7 @@ function globalListener(recipes) {
         displayErrorMessage(); // message d'erreur si pas de recette trouvée
       } else {
         fillAdvancedFields(mainSearchResults); // on actualise les tags
+        tagListener();
         displayRecipes(mainSearchResults);
       }
     }
@@ -36,6 +38,7 @@ function globalListener(recipes) {
         displayErrorMessage();
       } else {
         fillAdvancedFields(mainSearchResults);
+        tagListener();
         displayRecipes(mainSearchResults);
       }
     }
@@ -44,6 +47,7 @@ function globalListener(recipes) {
     else if (query.length <= 2 && !newTags.length) {
       mainSearchResults = [];
       fillAdvancedFields(recipes);
+      tagListener();
       displayRecipes(recipes);
     }
 
@@ -60,6 +64,7 @@ function globalListener(recipes) {
         acc.filter((element) => cur.includes(element))
       );
       fillAdvancedFields(tagsSearchResults);
+      tagListener();
       displayRecipes(tagsSearchResults);
     }
   });
@@ -82,6 +87,7 @@ function globalListener(recipes) {
         acc.filter((element) => cur.includes(element))
       );
       fillAdvancedFields(tagsSearchResults);
+      tagListener();
       displayRecipes(tagsSearchResults);
     }
 
@@ -95,6 +101,7 @@ function globalListener(recipes) {
         acc.filter((element) => cur.includes(element))
       );
       fillAdvancedFields(tagsSearchResults);
+      tagListener();
       displayRecipes(tagsSearchResults);
     }
 
@@ -102,6 +109,7 @@ function globalListener(recipes) {
     else if (!newTags.length && mainSearchResults.length) {
       tagsSearchResults = [];
       fillAdvancedFields(mainSearchResults);
+      tagListener();
       displayRecipes(mainSearchResults);
     }
 
@@ -110,6 +118,7 @@ function globalListener(recipes) {
       tagsSearchResults = [];
       mainSearchResults = [];
       fillAdvancedFields(recipes);
+      tagListener();
       displayRecipes(recipes);
     }
   });
@@ -143,7 +152,6 @@ function advancedFieldsListener(recipes) {
       );
       if (searchResults.length) {
         refreshAdvancedField(input, searchResults);
-        tagListener();
       }
 
       let field = input.parentElement.parentElement;
@@ -216,7 +224,6 @@ function advancedFieldsListener(recipes) {
         // quand on referme un champ de recherche sans selectionner de tag => on le remet à "0"
 
       } else {
-        tagListener();
         advancedList.style.display = "block";
         switch (chevron.parentElement.parentElement.className) {
           case "ingredients-field":
