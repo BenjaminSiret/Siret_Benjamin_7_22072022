@@ -2,96 +2,113 @@ let tagArray = [];
 let tagSearchArray = [];
 let results = false;
 let mainSearchResults = [];
-
-
-
-//TODO: ajouter des commentaires pour expliquer le code
+let tagsSearchResults = [];
+let newTags = [];
+let tagsArray = [];
+let tagsSearchArray = [];
 
 function globalListener(recipes) {
-  // base listeners
+
+  // listener sur les champs avancés
   advancedFieldsListener(recipes);
 
-  // search-input listener
+  // RECHERCHE PRINCIPALE
   const searchInput = document.getElementById("search-input");
   searchInput.addEventListener("keyup", () => {
     let query = searchInput.value.toLowerCase().trim();
-    if (query.length > 2) {
+
+    // saisie > 2 caractères && pas de tag selectionné => la recherche est lancée
+    if (query.length > 2 && !newTags.length) {
       mainSearchResults = mainSearchRecipes(recipes, query);
+
+      if (!mainSearchResults.length) {
+        displayErrorMessage(); // message d'erreur si pas de recette trouvée
+      } else {
+        displayRecipes(mainSearchResults);
+      }
+    }
+
+    // saisie > 2 caractères && tag selectionné => recherche croisée avec les résultats de tags
+    else if (query.length > 2 && newTags.length) {
+      mainSearchResults = mainSearchRecipes(tagsSearchResults, query);
       if (!mainSearchResults.length) {
         displayErrorMessage();
-        results = false;
       } else {
-        document.querySelector(".results").innerHTML = "";
         displayRecipes(mainSearchResults);
-        fillAdvancedFields(mainSearchResults);
-        advancedFieldsListener(mainSearchResults);
-        tagListener();
-        results = true;
       }
-      advancedFieldsListener(mainSearchResults);
-    } else {
+    }
+
+    // saisie < 2 caractères && pas de tag selectionné => on vide les résultats de recherche principale et on affiche toutes les recettes
+    else if (query.length <= 2 && !newTags.length) {
+      mainSearchResults = [];
       displayRecipes(recipes);
-      results = false;
+    }
+
+    // saisie < 2 caractères && tag selectionné => on vide le tableau de tags et on fait une recherche par tag
+    else if (query.length <= 2 && newTags.length) {
+      mainSearchResults = [];
+      tagsSearchArray = [];
+      tagsArray.forEach((tag) => {
+        const tagSearchResult = tagSearchRecipes(recipes, tag);
+        tagsSearchArray.push(tagSearchResult);
+      });
+      // on fait une recherche croisée si il y a plusieurs tags
+      tagsSearchResults = tagsSearchArray.reduce((acc, cur) =>
+        acc.filter((element) => cur.includes(element))
+      );
+      displayRecipes(tagsSearchResults);
     }
   });
 
-
+  // RECHERCHE PAR TAG
   const tagsSection = document.querySelector(".tags-section");
+  // on observe les changements dans le DOM sur la tagsSection
   const observer = new MutationObserver(() => {
-    const newTags = Array.from(document.querySelectorAll(".selected-tag"));
-    const tagsArray = newTags.map((tag) => tag.textContent);
-    const tagsSearchArray = [];
-    const chevron = document.querySelector(".rotate");
-    const input = chevron.parentElement.children[0];
-    // si il y a déjà un résultat de recherche, la recherche par tag est faite à partir de ces résultats
-    if (results) {
-      if (newTags.length) {
-        tagsArray.forEach((tag) => {
-          const tagSearchResult = tagSearchRecipes(mainSearchResults, tag);
-          tagsSearchArray.push(tagSearchResult);
-        });
-        const tagsSearchResults = tagsSearchArray.reduce((acc, cur) =>
-          acc.filter((element) => cur.includes(element))
-        );
-        displayRecipes(tagsSearchResults);
-        fillAdvancedFields(tagsSearchResults);
-        advancedFieldsListener(tagsSearchResults);
-      } else {
-        displayRecipes(mainSearchResults);
-        fillAdvancedFields(mainSearchResults);
-        advancedFieldsListener(mainSearchResults);
-        tagListener();
-      }
-      advancedFieldsListener(mainSearchResults);
-      tagListener();
+    newTags = Array.from(document.querySelectorAll(".selected-tag"));
+    tagsArray = newTags.map((tag) => tag.textContent);
+
+    // tags selectionnés && pas de résultats de recherche principale => on fait la recherche par tag sur toutes les recettes, on affiche les résultats
+    if (newTags.length && !mainSearchResults.length) {
+      tagsArray.forEach((tag) => {
+        const tagSearchResult = tagSearchRecipes(recipes, tag);
+        tagsSearchArray.push(tagSearchResult);
+      });
+      // on fait une recherche croisée si il y a plusieurs tags
+      tagsSearchResults = tagsSearchArray.reduce((acc, cur) =>
+        acc.filter((element) => cur.includes(element))
+      );
+      displayRecipes(tagsSearchResults);
     }
-    // si il n'y a pas de résultats de recherche, la recherche par tag est faite sur toutes les recettes
-    else if (!results) {
-      if (newTags.length) {
-        tagsArray.forEach((tag) => {
-          const tagSearchResult = tagSearchRecipes(recipes, tag);
-          tagsSearchArray.push(tagSearchResult);
-        });
-        const tagsSearchResults = tagsSearchArray.reduce((acc, cur) =>
-          acc.filter((element) => cur.includes(element))
-        );
-        displayRecipes(tagsSearchResults);
-        fillAdvancedFields(tagsSearchResults);
-        advancedFieldsListener(tagsSearchResults);
-        tagListener();
-      } else {
-        // il faut remettre le placeholder du champ
-        input.value = "";
-        //changePlaceholder(chevron);
-        displayRecipes(recipes);
-        fillAdvancedFields(recipes);
-        advancedFieldsListener(recipes);
-        tagListener();
-      }
+
+    // tags selectionnés && résultats de recherche principale => on fait la recherche par tag sur les résultats de recherche principale, on affiche les résultats
+    else if (newTags.length && mainSearchResults.length) {
+      tagsArray.forEach((tag) => {
+        const tagSearchResult = tagSearchRecipes(mainSearchResults, tag);
+        tagsSearchArray.push(tagSearchResult);
+      });
+      tagsSearchResults = tagsSearchArray.reduce((acc, cur) =>
+        acc.filter((element) => cur.includes(element))
+      );
+      displayRecipes(tagsSearchResults);
+    }
+
+    // pas de tags selectionnés && résultats de recherche principale => on vide les résultats par tag et on affiche les résultats de recherche principale
+    else if (!newTags.length && mainSearchResults.length) {
+      tagsSearchResults = [];
+      displayRecipes(mainSearchResults);
+    }
+
+    // pas de tags selectionnés && pas de recherche principale => on affiche toutes les recettes
+    else {
+      tagsSearchResults = [];
+      mainSearchResults = [];
+      displayRecipes(recipes);
     }
   });
+
   observer.observe(tagsSection, { childList: true });
 }
+
 
 function tagListener() {
   const tags = Array.from(document.querySelectorAll(
@@ -109,6 +126,7 @@ function advancedFieldsListener(recipes) {
     "#appliances-input, #ustensils-input, #ingredients-input"
   );
   inputsArray.forEach((input) => {
+
     input.addEventListener("keyup", () => {
       let query = input.value.toLowerCase().trim();
       const filteredArray = filter(recipes, input.id);
