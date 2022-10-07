@@ -9,7 +9,6 @@ let mainSearchResults = [];
 function globalListener(recipes) {
   // base listeners
   advancedFieldsListener(recipes);
-  tagListener();
 
   // search-input listener
   const searchInput = document.getElementById("search-input");
@@ -28,7 +27,6 @@ function globalListener(recipes) {
         results = true;
       }
       advancedFieldsListener(mainSearchResults);
-      tagListener();
     } else {
       displayRecipes(recipes);
       results = false;
@@ -41,9 +39,10 @@ function globalListener(recipes) {
     const newTags = Array.from(document.querySelectorAll(".selected-tag"));
     const tagsArray = newTags.map((tag) => tag.textContent);
     const tagsSearchArray = [];
+    const chevron = document.querySelector(".rotate");
+    const input = chevron.parentElement.children[0];
     // si il y a déjà un résultat de recherche, la recherche par tag est faite à partir de ces résultats
     if (results) {
-      console.log(results);
       if (newTags.length) {
         tagsArray.forEach((tag) => {
           const tagSearchResult = tagSearchRecipes(mainSearchResults, tag);
@@ -64,10 +63,8 @@ function globalListener(recipes) {
       advancedFieldsListener(mainSearchResults);
       tagListener();
     }
-
     // si il n'y a pas de résultats de recherche, la recherche par tag est faite sur toutes les recettes
     else if (!results) {
-      console.log(results);
       if (newTags.length) {
         tagsArray.forEach((tag) => {
           const tagSearchResult = tagSearchRecipes(recipes, tag);
@@ -81,6 +78,9 @@ function globalListener(recipes) {
         advancedFieldsListener(tagsSearchResults);
         tagListener();
       } else {
+        // il faut remettre le placeholder du champ
+        input.value = "";
+        changePlaceholder(chevron);
         displayRecipes(recipes);
         fillAdvancedFields(recipes);
         advancedFieldsListener(recipes);
@@ -168,11 +168,10 @@ function advancedFieldsListener(recipes) {
       // la classe de l'input est adaptée en fonction du champ avancé
       changeInputClass(chevron);
       changePlaceholder(chevron);
-
+      tagListener();
       // on affiche la liste si est masquée, on la masque si elle est affichée, le placeholder est adapté
       const advancedList = chevron.parentElement.nextElementSibling;
       if (advancedList.style.display === "block") {
-        advancedList.style.display = "none";
         chevron.parentElement.children[0].value = "";
         switch (chevron.parentElement.parentElement.className) {
           case "ingredients-field":
@@ -187,10 +186,11 @@ function advancedFieldsListener(recipes) {
             chevron.parentElement.children[0].placeholder = "Ustensils";
             break;
         }
-
+        advancedList.style.display = "none";
         // quand on referme un champ de recherche sans selectionner de tag => on le remet à "0"
         fillAdvancedFields(recipes);
       } else {
+        fillAdvancedFields(recipes);
         advancedList.style.display = "block";
       }
     });
