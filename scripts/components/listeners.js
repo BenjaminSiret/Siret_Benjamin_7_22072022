@@ -1,6 +1,5 @@
 let tagArray = [];
 let tagSearchArray = [];
-let results = false;
 let mainSearchResults = [];
 let tagsSearchResults = [];
 let newTags = [];
@@ -8,11 +7,15 @@ let tagsArray = [];
 let tagsSearchArray = [];
 
 
+
 function globalListener(recipes) {
 
-  // listener sur les champs avancés
+  // listener sur les champs avancés et les tags
+
+  //TODO: résoudre le problème d'advancedFieldsListener => forcer la recherche dans les champs sur les derniers résultats de recherche
   advancedFieldsListener(recipes);
   tagListener();
+
   // RECHERCHE PRINCIPALE
   const searchInput = document.getElementById("search-input");
   searchInput.addEventListener("keyup", () => {
@@ -103,6 +106,7 @@ function globalListener(recipes) {
       fillAdvancedFields(tagsSearchResults);
       tagListener();
       displayRecipes(tagsSearchResults);
+
     }
 
     // pas de tags selectionnés && résultats de recherche principale => on vide les résultats par tag et on affiche les résultats de recherche principale
@@ -143,7 +147,6 @@ function advancedFieldsListener(recipes) {
     "#appliances-input, #ustensils-input, #ingredients-input"
   );
   inputsArray.forEach((input) => {
-
     input.addEventListener("keyup", () => {
       let query = input.value.toLowerCase().trim();
       const filteredArray = filter(recipes, input.id);
@@ -152,6 +155,7 @@ function advancedFieldsListener(recipes) {
       );
       if (searchResults.length) {
         refreshAdvancedField(input, searchResults);
+        tagListener();
       }
 
       let field = input.parentElement.parentElement;
