@@ -4,6 +4,7 @@ let results = false;
 let mainSearchResults = [];
 
 
+
 //TODO: ajouter des commentaires pour expliquer le code
 
 function globalListener(recipes) {
@@ -24,6 +25,7 @@ function globalListener(recipes) {
         displayRecipes(mainSearchResults);
         fillAdvancedFields(mainSearchResults);
         advancedFieldsListener(mainSearchResults);
+        tagListener();
         results = true;
       }
       advancedFieldsListener(mainSearchResults);
@@ -80,7 +82,7 @@ function globalListener(recipes) {
       } else {
         // il faut remettre le placeholder du champ
         input.value = "";
-        changePlaceholder(chevron);
+        //changePlaceholder(chevron);
         displayRecipes(recipes);
         fillAdvancedFields(recipes);
         advancedFieldsListener(recipes);
@@ -92,9 +94,9 @@ function globalListener(recipes) {
 }
 
 function tagListener() {
-  const tags = document.querySelectorAll(
+  const tags = Array.from(document.querySelectorAll(
     ".appliances-tag, .ustensils-tag, .ingredients-tag"
-  );
+  ));
   tags.forEach((tag) => {
     tag.addEventListener("click", () => {
       displayTag(tag);
@@ -167,8 +169,6 @@ function advancedFieldsListener(recipes) {
 
       // la classe de l'input est adaptée en fonction du champ avancé
       changeInputClass(chevron);
-      changePlaceholder(chevron);
-      tagListener();
       // on affiche la liste si est masquée, on la masque si elle est affichée, le placeholder est adapté
       const advancedList = chevron.parentElement.nextElementSibling;
       if (advancedList.style.display === "block") {
@@ -191,7 +191,21 @@ function advancedFieldsListener(recipes) {
         fillAdvancedFields(recipes);
       } else {
         fillAdvancedFields(recipes);
+        tagListener();
         advancedList.style.display = "block";
+        switch (chevron.parentElement.parentElement.className) {
+          case "ingredients-field":
+            chevron.parentElement.children[0].placeholder = "Recherchez un ingrédient";
+            break;
+
+          case "appliances-field":
+            chevron.parentElement.children[0].placeholder = "Recherchez un appareil";
+            break;
+
+          case "ustensils-field":
+            chevron.parentElement.children[0].placeholder = "Recherchez un ustensile";
+            break;
+        }
       }
     });
   });

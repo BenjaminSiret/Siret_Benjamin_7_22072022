@@ -11,7 +11,6 @@ async function init() {
   displayRecipes(recipes);
   fillAdvancedFields(recipes);
   globalListener(recipes);
-
 }
 
 init();
