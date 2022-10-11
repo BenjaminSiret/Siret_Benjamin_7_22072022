@@ -146,11 +146,21 @@ function advancedFieldsListener(recipes) {
   const inputsArray = document.querySelectorAll(
     "#appliances-input, #ustensils-input, #ingredients-input"
   );
+
+  let filteredArray = [];
+  let searchResults = [];
+
   inputsArray.forEach((input) => {
     input.addEventListener("keyup", () => {
       let query = input.value.toLowerCase().trim();
-      const filteredArray = filter(recipes, input.id);
-      const searchResults = filteredArray.filter((element) =>
+
+      if (mainSearchResults.length) {
+        filteredArray = filter(mainSearchResults, input.id);
+
+      } else if (tagsSearchResults.length) {
+        filteredArray = filter(tagsSearchResults, input.id);
+      }
+      searchResults = filteredArray.filter((element) =>
         element.toLowerCase().includes(query)
       );
       if (searchResults.length) {
