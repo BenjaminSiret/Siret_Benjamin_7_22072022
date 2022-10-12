@@ -171,7 +171,7 @@ function advancedFieldsListener(recipes) {
       }
 
       advancedFieldsTagsResults = filteredTagsArray.filter((element) =>
-        element.toLowerCase().includes(query)
+        element.toLowerCase().startsWith(query)
       );
 
       // si résultat => actualisation des champs avancés, on relance le tagListener
