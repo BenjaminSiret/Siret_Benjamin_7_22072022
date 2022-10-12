@@ -1,12 +1,11 @@
-let tagArray = [];
-let tagSearchArray = [];
-let mainSearchResults = [];
-let tagsSearchResults = [];
-let newTags = [];
-let tagsArray = [];
-let tagsSearchArray = [];
 
-
+let mainSearchResults = []; // tableau de resultats de recherche principale
+let tagsSearchResults = []; // tableau de résultats de recherche par tags
+let newTags = []; // tableau contenant les tags (éléments html)
+let tagsArray = []; // tableau contenant les tags (strings) séléctionnés par l'utilisateur
+let tagsSearchArray = [];// tableau contenant les résultats de recherche (non croisée) par tag
+let filteredTagsArray = []; // tableau de tous les tags filtrés pour une recherche
+let advancedFieldsTagsResults = []; // tableau de tags pour une recherche dans les champs avancés
 
 function globalListener(recipes) {
 
@@ -81,14 +80,20 @@ function globalListener(recipes) {
 
     // tags selectionnés && pas de résultats de recherche principale => on fait la recherche par tag sur toutes les recettes, on affiche les résultats
     if (newTags.length && !mainSearchResults.length) {
+
+      //on vide le tableau de tags utilisés pour la recherche
+      tagsSearchArray = [];
+      // on ajoute chaque tag affichés au tableau de tags
       tagsArray.forEach((tag) => {
         const tagSearchResult = tagSearchRecipes(recipes, tag);
         tagsSearchArray.push(tagSearchResult);
       });
+
       // on fait une recherche croisée si il y a plusieurs tags
       tagsSearchResults = tagsSearchArray.reduce((acc, cur) =>
         acc.filter((element) => cur.includes(element))
       );
+      // on actualise les champs avancés
       fillAdvancedFields(tagsSearchResults);
       tagListener();
       displayRecipes(tagsSearchResults);
@@ -96,6 +101,7 @@ function globalListener(recipes) {
 
     // tags selectionnés && résultats de recherche principale => on fait la recherche par tag sur les résultats de recherche principale, on affiche les résultats
     else if (newTags.length && mainSearchResults.length) {
+      tagsSearchArray = [];
       tagsArray.forEach((tag) => {
         const tagSearchResult = tagSearchRecipes(mainSearchResults, tag);
         tagsSearchArray.push(tagSearchResult);
@@ -147,24 +153,30 @@ function advancedFieldsListener(recipes) {
     "#appliances-input, #ustensils-input, #ingredients-input"
   );
 
-  let filteredArray = [];
-  let searchResults = [];
-
   inputsArray.forEach((input) => {
     input.addEventListener("keyup", () => {
       let query = input.value.toLowerCase().trim();
 
+      // si résultat de recherche principale => on filtre à partir de ces résultats
       if (mainSearchResults.length) {
-        filteredArray = filter(mainSearchResults, input.id);
+        filteredTagsArray = filter(mainSearchResults, input.id);
 
+        // si résultat de recherche par tag => on filter à partir de ces résultats
       } else if (tagsSearchResults.length) {
-        filteredArray = filter(tagsSearchResults, input.id);
+        filteredTagsArray = filter(tagsSearchResults, input.id);
+
+        // si pas de recherche => on filtre à partir de toutes les recettes
+      } else {
+        filteredTagsArray = filter(recipes, input.id);
       }
-      searchResults = filteredArray.filter((element) =>
+
+      advancedFieldsTagsResults = filteredTagsArray.filter((element) =>
         element.toLowerCase().includes(query)
       );
-      if (searchResults.length) {
-        refreshAdvancedField(input, searchResults);
+
+      // si résultat => actualisation des champs avancés, on relance le tagListener
+      if (advancedFieldsTagsResults.length) {
+        refreshAdvancedFields(input, advancedFieldsTagsResults);
         tagListener();
       }
 
@@ -208,7 +220,6 @@ function advancedFieldsListener(recipes) {
       }
     });
   });
-
   // ouverture / fermeture des dropdown au click sur un chevron
   const chevrons = document.querySelectorAll(".fa-chevron-down");
   chevrons.forEach(chevron => {
@@ -235,7 +246,7 @@ function advancedFieldsListener(recipes) {
             break;
         }
         advancedList.style.display = "none";
-        // quand on referme un champ de recherche sans selectionner de tag => on le remet à "0"
+        // TODO: quand on referme un champ de recherche sans selectionner de tag => on le remet sur les résulats en cours
 
       } else {
         advancedList.style.display = "block";

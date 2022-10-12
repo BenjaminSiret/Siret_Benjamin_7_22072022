@@ -56,13 +56,13 @@ function fillAdvancedFields(recipes) {
   ingredientsSection.appendChild(ingredientsList);
 }
 
-function refreshAdvancedField(input, searchResults) {
+function refreshAdvancedFields(input, advancedFieldsTagsResults) {
   const inputSection = document.getElementById(
     input.id.replace("input", "search")
   );
   inputSection.innerHTML = "";
   const inputList = document.createElement("ul");
-  searchResults.forEach((element) => {
+  advancedFieldsTagsResults.forEach((element) => {
     const li = document.createElement("li");
     li.textContent = `${element}`;
     li.classList.add(`${input.id.replace("-input", "-tag")}`);
