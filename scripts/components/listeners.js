@@ -10,8 +10,6 @@ let advancedFieldsTagsResults = []; // tableau de tags pour une recherche dans l
 function globalListener(recipes) {
 
   // listener sur les champs avancés et les tags
-
-  //TODO: résoudre le problème d'advancedFieldsListener => forcer la recherche dans les champs sur les derniers résultats de recherche
   advancedFieldsListener(recipes);
   tagListener();
 
@@ -78,9 +76,12 @@ function globalListener(recipes) {
     newTags = Array.from(document.querySelectorAll(".selected-tag"));
     tagsArray = newTags.map((tag) => tag.textContent);
 
+
+    closeActiveButtons(); // on ferme les boutons actifs
+    clearActiveInputs(); // on vide les inputs des champs avancés
+
     // tags selectionnés && pas de résultats de recherche principale => on fait la recherche par tag sur toutes les recettes, on affiche les résultats
     if (newTags.length && !mainSearchResults.length) {
-
       //on vide le tableau de tags utilisés pour la recherche
       tagsSearchArray = [];
       // on ajoute chaque tag affichés au tableau de tags
@@ -187,6 +188,7 @@ function advancedFieldsListener(recipes) {
       // on ouvre la dropdown et on tourne le chevron quand saisie utilisateur <=> et inversement
       switch (field.className) {
         case "ingredients-field":
+          closeActiveButtons();
           button.classList.add("ingredients-active");
           chevron.classList.add("rotate");
           tagsList.style.display = "block";
@@ -197,6 +199,7 @@ function advancedFieldsListener(recipes) {
           }
           break;
         case "appliances-field":
+          closeActiveButtons();
           button.classList.add("appliances-active");
           chevron.classList.add("rotate");
           tagsList.style.display = "block";
@@ -207,6 +210,7 @@ function advancedFieldsListener(recipes) {
           }
           break;
         case "ustensils-field":
+          closeActiveButtons();
           button.classList.add("ustensils-active");
           chevron.classList.add("rotate");
           tagsList.style.display = "block";
@@ -219,6 +223,7 @@ function advancedFieldsListener(recipes) {
       }
     });
   });
+
   // ouverture / fermeture des dropdown au click sur un chevron
   const chevrons = document.querySelectorAll(".fa-chevron-down");
   chevrons.forEach(chevron => {
@@ -243,7 +248,7 @@ function advancedFieldsListener(recipes) {
             break;
 
           case "ustensils-field":
-            input.placeholder = "Ustensils";
+            input.placeholder = "Ustensiles";
             break;
         }
         advancedList.style.display = "none";
@@ -293,6 +298,34 @@ function changeInputClass(input) {
       input.parentElement.classList.toggle('ustensils-active');
       break;
   }
+}
+
+function closeActiveButtons() {
+  const inputsButtons = Array.from(document.querySelectorAll(".search-advanced-button"));
+  inputsButtons.forEach(button => {
+    button.classList.remove("ingredients-active", "appliances-active", "ustensils-active");
+    button.nextElementSibling.style.display = "none";
+    button.children[1].classList.remove("rotate");
+
+    switch (button.parentElement.className) {
+      case "ingredients-field":
+        button.children[0].placeholder = "Ingrédients";
+        break;
+      case "appliances-field":
+        button.children[0].placeholder = "Appareils";
+        break;
+      case "ustensils-field":
+        button.children[0].placeholder = "Ustensiles";
+        break;
+    }
+  });
+}
+
+function clearActiveInputs() {
+  const inputs = Array.from(document.querySelectorAll("#appliances-input, #ingredients-input, #ustensils-input"));
+  inputs.forEach(input => {
+    input.value = "";
+  });
 }
 
 // function changePlaceholder(input) {
