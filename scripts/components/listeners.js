@@ -164,7 +164,6 @@ function advancedFieldsListener(recipes) {
         // si résultat de recherche par tag => on filter à partir de ces résultats
       } else if (tagsSearchResults.length) {
         filteredTagsArray = filter(tagsSearchResults, input.id);
-
         // si pas de recherche => on filtre à partir de toutes les recettes
       } else {
         filteredTagsArray = filter(recipes, input.id);
@@ -223,44 +222,57 @@ function advancedFieldsListener(recipes) {
   // ouverture / fermeture des dropdown au click sur un chevron
   const chevrons = document.querySelectorAll(".fa-chevron-down");
   chevrons.forEach(chevron => {
-    chevron.addEventListener("click", () => {
-      chevron.classList.toggle("rotate");
+    let input = chevron.parentElement.children[0];
+    let field = chevron.parentElement.parentElement;
 
-      // la classe de l'input est adaptée en fonction du champ avancé
-      changeInputClass(chevron);
+    chevron.addEventListener("click", () => {
+      chevron.classList.toggle("rotate"); // on pivote le chevron à 180 deg
+      changeInputClass(chevron); // la classe de l'input est adaptée en fonction du champ avancé
+
       // on affiche la liste si est masquée, on la masque si elle est affichée, le placeholder est adapté
-      const advancedList = chevron.parentElement.nextElementSibling;
+      let advancedList = chevron.parentElement.nextElementSibling;
       if (advancedList.style.display === "block") {
-        chevron.parentElement.children[0].value = "";
-        switch (chevron.parentElement.parentElement.className) {
+        input.value = "";
+        switch (field.className) {
           case "ingredients-field":
-            chevron.parentElement.children[0].placeholder = "Ingredients";
+            input.placeholder = "Ingredients";
             break;
 
           case "appliances-field":
-            chevron.parentElement.children[0].placeholder = "Appareils";
+            input.placeholder = "Appareils";
             break;
 
           case "ustensils-field":
-            chevron.parentElement.children[0].placeholder = "Ustensils";
+            input.placeholder = "Ustensils";
             break;
         }
         advancedList.style.display = "none";
-        // TODO: quand on referme un champ de recherche sans selectionner de tag => on le remet sur les résulats en cours
+        // fermeture du champ sur chevron => on actualise les champs
+        if (mainSearchResults.length) {
+          fillAdvancedFields(mainSearchResults);
+
+        } else if (tagsSearchResults.length) {
+          fillAdvancedFields(tagsSearchResults);
+
+        } else {
+          fillAdvancedFields(recipes);
+        }
+
+        tagListener(); // on relance le tagListener
 
       } else {
         advancedList.style.display = "block";
-        switch (chevron.parentElement.parentElement.className) {
+        switch (field.className) {
           case "ingredients-field":
-            chevron.parentElement.children[0].placeholder = "Recherchez un ingrédient";
+            input.placeholder = "Recherchez un ingrédient";
             break;
 
           case "appliances-field":
-            chevron.parentElement.children[0].placeholder = "Recherchez un appareil";
+            input.placeholder = "Recherchez un appareil";
             break;
 
           case "ustensils-field":
-            chevron.parentElement.children[0].placeholder = "Recherchez un ustensile";
+            input.placeholder = "Recherchez un ustensile";
             break;
         }
       }
@@ -283,31 +295,32 @@ function changeInputClass(input) {
   }
 }
 
-function changePlaceholder(input) {
-  let fieldInput = input.parentElement.children[0];
-  switch (input.parentElement.parentElement.className) {
-    case "ingredients-field":
-      if (fieldInput.placeholder === "Ingredients") {
-        fieldInput.placeholder = "Recherchez un ingrédient";
-      } else {
-        fieldInput.placeholder = "Ingredients";
-      }
-      break;
-    case "appliances-field":
-      if (fieldInput.placeholder === "Appareils") {
-        fieldInput.placeholder = "Recherchez un appareil";
-      } else {
-        fieldInput.placeholder = "Appareils";
-      }
-      break;
-    case "ustensils-field":
-      if (fieldInput.placeholder === "Ustensiles") {
-        fieldInput.placeholder = "Recherchez un ustensile";
-      } else {
-        fieldInput.placeholder = "Ustensiles";
-      }
-      break;
-  }
-}
+// function changePlaceholder(input) {
+//   let fieldInput = input.parentElement.children[0];
+//   console.log(input.parentElement.parentElement);
+//   switch (input.parentElement.parentElement.className) {
+//     case "ingredients-field":
+//       if (fieldInput.placeholder === "Ingredients") {
+//         fieldInput.placeholder = "Recherchez un ingrédient";
+//       } else {
+//         fieldInput.placeholder = "Ingredients";
+//       }
+//       break;
+//     case "appliances-field":
+//       if (fieldInput.placeholder === "Appareils") {
+//         fieldInput.placeholder = "Recherchez un appareil";
+//       } else {
+//         fieldInput.placeholder = "Appareils";
+//       }
+//       break;
+//     case "ustensils-field":
+//       if (fieldInput.placeholder === "Ustensiles") {
+//         fieldInput.placeholder = "Recherchez un ustensile";
+//       } else {
+//         fieldInput.placeholder = "Ustensiles";
+//       }
+//       break;
+//   }
+// }
 
 

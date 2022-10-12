@@ -101,7 +101,3 @@ function displayErrorMessage() {
   results.innerHTML = `<p class="error-message">"Aucune recette ne correspond à votre critère... vous pouvez chercher « tarte aux pommes », « poisson », etc..."</p>`;
 }
 
-function displayIngredientsField() {
-  const ingredientsField = document.querySelector(".ingredients-tags");
-  ingredientsField.style.display = "block";
-}
