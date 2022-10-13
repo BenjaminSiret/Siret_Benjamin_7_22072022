@@ -76,9 +76,7 @@ function globalListener(recipes) {
     newTags = Array.from(document.querySelectorAll(".selected-tag"));
     tagsArray = newTags.map((tag) => tag.textContent);
 
-
-    closeActiveButtons(); // on ferme les boutons actifs
-    clearActiveInputs(); // on vide les inputs des champs avancés
+    //closeActiveInputs(); // on ferme les boutons actifs
 
     // tags selectionnés && pas de résultats de recherche principale => on fait la recherche par tag sur toutes les recettes, on affiche les résultats
     if (newTags.length && !mainSearchResults.length) {
@@ -151,7 +149,7 @@ function tagListener() {
 
 function advancedFieldsListener(recipes) {
   const inputsArray = document.querySelectorAll(
-    "#appliances-input, #ustensils-input, #ingredients-input"
+    "#ingredients-input, #appliances-input, #ustensils-inputI"
   );
 
   inputsArray.forEach((input) => {
@@ -188,8 +186,7 @@ function advancedFieldsListener(recipes) {
       // on ouvre la dropdown et on tourne le chevron quand saisie utilisateur <=> et inversement
       switch (field.className) {
         case "ingredients-field":
-          closeActiveButtons();
-          clearOtherActiveInputs(input);
+          closeActiveInputs(input);
 
           button.classList.add("ingredients-active");
           chevron.classList.add("rotate");
@@ -201,8 +198,7 @@ function advancedFieldsListener(recipes) {
           }
           break;
         case "appliances-field":
-          closeActiveButtons();
-          clearOtherActiveInputs(input);
+          closeActiveInputs(input);
 
           button.classList.add("appliances-active");
           chevron.classList.add("rotate");
@@ -214,8 +210,7 @@ function advancedFieldsListener(recipes) {
           }
           break;
         case "ustensils-field":
-          closeActiveButtons();
-          clearOtherActiveInputs(input);
+          closeActiveInputs(input);
 
           button.classList.add("ustensils-active");
           chevron.classList.add("rotate");
@@ -237,6 +232,7 @@ function advancedFieldsListener(recipes) {
     let field = chevron.parentElement.parentElement;
 
     chevron.addEventListener("click", () => {
+      closeActiveInputs(input); // on ferme les autres inputs actifs le cas échéant
       chevron.classList.toggle("rotate"); // on pivote le chevron à 180 deg
       changeInputClass(chevron); // la classe de l'input est adaptée en fonction du champ avancé
 
@@ -306,35 +302,30 @@ function changeInputClass(input) {
   }
 }
 
-function closeActiveButtons() {
+function closeActiveInputs(input) {
   const inputsButtons = Array.from(document.querySelectorAll(".search-advanced-button"));
-  inputsButtons.forEach(button => {
-    button.classList.remove("ingredients-active", "appliances-active", "ustensils-active");
-    button.nextElementSibling.style.display = "none";
-    button.children[1].classList.remove("rotate");
+  const inputToRemove = inputsButtons.indexOf(input.parentElement);
+  inputsButtons.splice(inputToRemove, 1);
+  inputsButtons.forEach(input => {
+    input.classList.remove("ingredients-active", "appliances-active", "ustensils-active");
+    input.nextElementSibling.style.display = "none";
+    input.children[1].classList.remove("rotate");
+    input.children[0].value = "";
 
-    switch (button.parentElement.className) {
+    switch (input.parentElement.className) {
       case "ingredients-field":
-        button.children[0].placeholder = "Ingrédients";
+        input.children[0].placeholder = "Ingrédients";
         break;
       case "appliances-field":
-        button.children[0].placeholder = "Appareils";
+        input.children[0].placeholder = "Appareils";
         break;
       case "ustensils-field":
-        button.children[0].placeholder = "Ustensiles";
+        input.children[0].placeholder = "Ustensiles";
         break;
     }
   });
 }
 
-function clearOtherActiveInputs(input) {
-  const inputs = Array.from(document.querySelectorAll("#appliances-input, #ingredients-input, #ustensils-input"));
-  const inputToRemove = inputs.indexOf(input);
-  inputs.splice(inputToRemove, 1);
-  inputs.forEach(input => {
-    input.value = "";
-  });
-}
 
 // function changePlaceholder(input) {
 //   let fieldInput = input.parentElement.children[0];
