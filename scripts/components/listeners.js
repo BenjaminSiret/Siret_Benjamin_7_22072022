@@ -189,6 +189,8 @@ function advancedFieldsListener(recipes) {
       switch (field.className) {
         case "ingredients-field":
           closeActiveButtons();
+          clearOtherActiveInputs(input);
+
           button.classList.add("ingredients-active");
           chevron.classList.add("rotate");
           tagsList.style.display = "block";
@@ -200,6 +202,8 @@ function advancedFieldsListener(recipes) {
           break;
         case "appliances-field":
           closeActiveButtons();
+          clearOtherActiveInputs(input);
+
           button.classList.add("appliances-active");
           chevron.classList.add("rotate");
           tagsList.style.display = "block";
@@ -211,6 +215,8 @@ function advancedFieldsListener(recipes) {
           break;
         case "ustensils-field":
           closeActiveButtons();
+          clearOtherActiveInputs(input);
+
           button.classList.add("ustensils-active");
           chevron.classList.add("rotate");
           tagsList.style.display = "block";
@@ -321,8 +327,10 @@ function closeActiveButtons() {
   });
 }
 
-function clearActiveInputs() {
+function clearOtherActiveInputs(input) {
   const inputs = Array.from(document.querySelectorAll("#appliances-input, #ingredients-input, #ustensils-input"));
+  const inputToRemove = inputs.indexOf(input);
+  inputs.splice(inputToRemove, 1);
   inputs.forEach(input => {
     input.value = "";
   });
