@@ -28,6 +28,7 @@ function filterIngredients(recipes) {
 function filter(recipes, input) {
   if (input === "appliances-input") {
     return [...new Set(recipes.map((recipe) => recipe.appliance.toLowerCase()))];
+
   } else if (input === "ustensils-input") {
     const ustensilsArray = recipes.map((recipe) => recipe.ustensils);
     let searchArray = [];
@@ -37,6 +38,7 @@ function filter(recipes, input) {
       });
     });
     return [...new Set(searchArray)];
+
   } else if (input === "ingredients-input") {
     const ingredientsArray = recipes.map((recipe) => recipe.ingredients);
     let searchArray = [];

@@ -8,7 +8,7 @@ function displayRecipes(recipes) {
   });
 }
 
-function displayAdvancedFields(recipes) {
+function fillAdvancedFields(recipes) {
   const appliancesSection = document.getElementById("appliances-search");
   const ustensilsSection = document.getElementById("ustensils-search");
   const ingredientsSection = document.getElementById("ingredients-search");
@@ -25,45 +25,47 @@ function displayAdvancedFields(recipes) {
   const ustensilsList = document.createElement("ul");
   const ingredientsList = document.createElement("ul");
 
+  ingredientsList.classList.add("ingredients-tags-list");
+
   appliancesArray.forEach((element) => {
     const li = document.createElement("li");
     li.textContent = `${element}`;
-    li.classList.add("appliance-tag");
+    li.classList.add("appliances-tag");
     appliancesList.appendChild(li);
   });
   ustensilsArray.forEach((element) => {
     const li = document.createElement("li");
     li.textContent = `${element}`;
-    li.classList.add("ustensil-tag");
+    li.classList.add("ustensils-tag");
     ustensilsList.appendChild(li);
   });
   ingredientsArray.forEach((element) => {
     const li = document.createElement("li");
     li.textContent = `${element}`;
-    li.classList.add("ingredient-tag");
+    li.classList.add("ingredients-tag");
     ingredientsList.appendChild(li);
   });
 
-  appliancesSection.classList.add("appliances-results");
+  appliancesSection.classList.add("appliances-tags-container");
   appliancesSection.appendChild(appliancesList);
 
-  ustensilsSection.classList.add("ustensils-results");
+  ustensilsSection.classList.add("ustensils-tags-container");
   ustensilsSection.appendChild(ustensilsList);
 
-  ingredientsSection.classList.add("ingredients-results");
+  ingredientsSection.classList.add("ingredients-tags-container");
   ingredientsSection.appendChild(ingredientsList);
 }
 
-function refreshAdvancedField(input, searchResults) {
+function refreshAdvancedFields(input, advancedFieldsTagsResults) {
   const inputSection = document.getElementById(
     input.id.replace("input", "search")
   );
   inputSection.innerHTML = "";
   const inputList = document.createElement("ul");
-  searchResults.forEach((element) => {
+  advancedFieldsTagsResults.forEach((element) => {
     const li = document.createElement("li");
     li.textContent = `${element}`;
-    li.classList.add(`${input.id.replace("s-input", "-tag")}`);
+    li.classList.add(`${input.id.replace("-input", "-tag")}`);
     inputList.appendChild(li);
   });
   inputSection.classList.add(`${input.id.replace("input", "results")}`);
@@ -75,13 +77,13 @@ function displayTag(tag) {
   const selectedTag = document.createElement("div");
   selectedTag.innerHTML = `<span>${tag.textContent}</span><img src='./assets/cross.png' class="cross" onClick="removeTag(this)">`;
   switch (tag.className) {
-    case "appliance-tag":
+    case "appliances-tag":
       selectedTag.style.backgroundColor = "#68d9a4";
       break;
-    case "ustensil-tag":
+    case "ustensils-tag":
       selectedTag.style.backgroundColor = "#ed6454";
       break;
-    case "ingredient-tag":
+    case "ingredients-tag":
       selectedTag.style.backgroundColor = "#3282f7";
       break;
   }
@@ -98,3 +100,4 @@ function displayErrorMessage() {
   const results = document.querySelector(".results");
   results.innerHTML = `<p class="error-message">"Aucune recette ne correspond à votre critère... vous pouvez chercher « tarte aux pommes », « poisson », etc..."</p>`;
 }
+

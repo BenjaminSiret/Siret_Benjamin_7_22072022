@@ -33,34 +33,40 @@
         </form>
         <div class="tags-section"></div>
         <div class="search-advanced">
-          <div class="search-advanced-button">
-            <input
-              id="ingredients-input"
-              type="text"
-              placeholder="Ingredients"
-              class="search-advanced-input"
-            />
-            <i class="fa-solid fa-chevron-down"></i>
+          <div class="ingredients-field">
+            <div class="search-advanced-button">
+              <input
+                id="ingredients-input"
+                type="text"
+                placeholder="Ingredients"
+                class="search-advanced-input"
+              />
+              <i class="fa-solid fa-chevron-down"></i>
+            </div>
             <div id="ingredients-search"></div>
           </div>
-          <div class="search-advanced-button">
-            <input
-              id="appliances-input"
-              type="text"
-              placeholder="Appareils"
-              class="search-advanced-input"
-            />
-            <i class="fa-solid fa-chevron-down"></i>
+          <div class="appliances-field">
+            <div class="search-advanced-button appliances-color">
+              <input
+                id="appliances-input"
+                type="text"
+                placeholder="Appareils"
+                class="search-advanced-input"
+              />
+              <i class="fa-solid fa-chevron-down"></i>
+            </div>
             <div id="appliances-search"></div>
           </div>
-          <div class="search-advanced-button">
-            <input
-              id="ustensils-input"
-              type="text"
-              placeholder="Ustensiles"
-              class="search-advanced-input"
-            />
-            <i class="fa-solid fa-chevron-down"></i>
+          <div class="ustensils-field">
+            <div class="search-advanced-button ustensils-color">
+              <input
+                id="ustensils-input"
+                type="text"
+                placeholder="Ustensiles"
+                class="search-advanced-input"
+              />
+              <i class="fa-solid fa-chevron-down"></i>
+            </div>
             <div id="ustensils-search"></div>
           </div>
         </div>
@@ -68,10 +74,10 @@
       <section class="results"></section>
     </main>
   </body>
-  <script src="/scripts/components/searchListener.js"></script>
-  <script src="/scripts/components/searchFunctions.js"></script>
-  <script src="/scripts/components/recipeFactory.js"></script>
-  <script src="/scripts/components/filterFunctions.js"></script>
-  <script src="/scripts/components/displayFunctions.js"></script>
-  <script src="/scripts/index.js"></script>
+  <script src="scripts/components/listeners.js"></script>
+  <script src="scripts/components/searchFunctions.js"></script>
+  <script src="scripts/components/recipeFactory.js"></script>
+  <script src="scripts/components/filterFunctions.js"></script>
+  <script src="scripts/components/displayFunctions.js"></script>
+  <script src="scripts/index.js"></script>
 </html>

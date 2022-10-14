@@ -78,16 +78,19 @@ body {
   display: flex;
 }
 .search .search-advanced-button {
+  display: flex;
   align-items: center;
   padding: 0px 15px 0px 15px;
   font-family: "Lato", sans-serif;
   font-size: 18px;
-  width: 170px;
   min-height: 69px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
   border-radius: 5px;
   border: none;
   color: white;
-  margin-right: 20px;
+  background-color: #3282f7;
 }
 .search .search-advanced-button::-moz-placeholder {
   color: white;
@@ -98,22 +101,21 @@ body {
 .search .search-advanced-button::placeholder {
   color: white;
 }
-.search .search-advanced-button:nth-of-type(1) {
-  background-color: #3282f7;
-}
-.search .search-advanced-button:nth-of-type(2) {
-  background-color: #68d9a4;
-}
-.search .search-advanced-button:nth-of-type(3) {
-  background-color: #ed6454;
-}
 .search .search-advanced-input {
   width: 90%;
   font-family: "Lato", sans-serif;
   font-weight: 700;
   font-size: 18px;
   background-color: transparent;
+  color: white;
   border: none;
+}
+.search .search-advanced-input:focus {
+  outline: none;
+}
+.search .search-advanced-input-container {
+  display: flex;
+  padding-top: 20px;
 }
 .search .search-advanced-input::-moz-placeholder {
   color: white;
@@ -132,20 +134,67 @@ body {
   height: -moz-fit-content;
   height: fit-content;
 }
-.search .appliances-results,
-.search .ustensils-results,
-.search .ingredients-results {
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
+.search .search-advanced .appliances-color {
+  background-color: #68d9a4;
+}
+.search .search-advanced .ustensils-color {
+  background-color: #ed6454;
+}
+.search .appliances-tags-container,
+.search .ustensils-tags-container,
+.search .ingredients-tags-container {
   cursor: pointer;
+  color: white;
+  display: none;
+  margin-top: -5px;
+  padding-top: 10px;
+  border-radius: 0 0 5px 5px;
+}
+.search .appliances-tags-container ul,
+.search .ustensils-tags-container ul,
+.search .ingredients-tags-container ul {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  max-height: 500px;
+  overflow: scroll;
+  padding: 10px;
+  font-family: "Lato", sans-serif;
+  font-size: 18px;
+}
+.search .appliances-tags-container li,
+.search .ustensils-tags-container li,
+.search .ingredients-tags-container li {
+  margin-top: 10px;
+}
+.search .ingredients-tags-container {
+  background-color: #3282f7;
+}
+.search .appliances-tags-container {
+  background-color: #68d9a4;
+}
+.search .ustensils-tags-container {
+  background-color: #ed6454;
+}
+.search .rotate {
+  transform: rotate(180deg);
+}
+.search .ingredients-active {
+  width: 700px;
+}
+.search .ustensils-active {
+  width: 500px;
+}
+.search .appliances-active {
+  width: 400px;
+}
+.search .ingredients-field,
+.search .appliances-field,
+.search .ustensils-field {
+  margin-right: 10px;
 }
 
 .results {
-  margin: auto;
+  margin: 20px auto;
   display: grid;
   grid-template-columns: 1fr 1fr auto;
 }

@@ -53,30 +53,20 @@
     display: flex;
 
     &-button {
-      //display: flex;
+      display: flex;
       align-items: center;
       padding: 0px 15px 0px 15px;
       font-family: "Lato", sans-serif;
       font-size: 18px;
-      width: 170px;
       min-height: 69px;
+      height: fit-content;
       border-radius: 5px;
       border: none;
       color: white;
-      margin-right: 20px;
 
+      background-color: #3282f7;
       &::placeholder {
         color: white;
-      }
-
-      &:nth-of-type(1) {
-        background-color: #3282f7;
-      }
-      &:nth-of-type(2) {
-        background-color: #68d9a4;
-      }
-      &:nth-of-type(3) {
-        background-color: #ed6454;
       }
     }
 
@@ -86,7 +76,16 @@
       font-weight: 700;
       font-size: 18px;
       background-color: transparent;
+      color: white;
       border: none;
+      &:focus {
+        outline: none;
+      }
+
+      &-container {
+        display: flex;
+        padding-top: 20px;
+      }
 
       &::placeholder {
         color: white;
@@ -97,13 +96,72 @@
     i {
       height: fit-content;
     }
+
+    .appliances-color {
+      background-color: #68d9a4;
+    }
+
+    .ustensils-color {
+      background-color: #ed6454;
+    }
   }
 
-  .appliances-results,
-  .ustensils-results,
-  .ingredients-results {
-    width: fit-content;
-    height: fit-content;
+  .appliances-tags-container,
+  .ustensils-tags-container,
+  .ingredients-tags-container {
     cursor: pointer;
+    color: white;
+    display: none;
+    margin-top: -5px;
+    padding-top: 10px;
+    border-radius: 0 0 5px 5px;
+
+    ul {
+      display: grid;
+      grid-template-columns: 1fr 1fr auto;
+      max-height: 500px;
+      overflow: scroll;
+      padding: 10px;
+      font-family: "Lato", sans-serif;
+      font-size: 18px;
+    }
+
+    li {
+      margin-top: 10px;
+    }
+  }
+
+  .ingredients-tags-container {
+    background-color: #3282f7;
+  }
+
+  .appliances-tags-container {
+    background-color: #68d9a4;
+  }
+
+  .ustensils-tags-container {
+    background-color: #ed6454;
+  }
+
+  .rotate {
+    transform: rotate(180deg);
+  }
+
+  .ingredients-active {
+    width: 700px;
+  }
+
+  .ustensils-active {
+    width: 500px;
+  }
+
+  .appliances-active {
+    width: 400px;
+  }
+
+  .ingredients-field,
+  .appliances-field,
+  .ustensils-field {
+    margin-right: 10px;
   }
 }
