@@ -76,7 +76,7 @@ function globalListener(recipes) {
     newTags = Array.from(document.querySelectorAll(".selected-tag"));
     tagsArray = newTags.map((tag) => tag.textContent);
 
-    //closeActiveInputs(); // on ferme les boutons actifs
+    //TODO: ajouter la fermeture de tous les champs avancés quand on supprime un tag ?
 
     // tags selectionnés && pas de résultats de recherche principale => on fait la recherche par tag sur toutes les recettes, on affiche les résultats
     if (newTags.length && !mainSearchResults.length) {
@@ -149,7 +149,7 @@ function tagListener() {
 
 function advancedFieldsListener(recipes) {
   const inputsArray = document.querySelectorAll(
-    "#ingredients-input, #appliances-input, #ustensils-inputI"
+    "#ingredients-input, #appliances-input, #ustensils-input"
   );
 
   inputsArray.forEach((input) => {
@@ -311,7 +311,6 @@ function closeActiveInputs(input) {
     input.nextElementSibling.style.display = "none";
     input.children[1].classList.remove("rotate");
     input.children[0].value = "";
-
     switch (input.parentElement.className) {
       case "ingredients-field":
         input.children[0].placeholder = "Ingrédients";
