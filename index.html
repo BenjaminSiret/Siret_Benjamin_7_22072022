@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="fr">
   <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="utf-8" >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" >
     <title>Les petits plats</title>
     <meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="/sass/style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" >
+    <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" >
+    <link rel="preconnect" href="https://fonts.googleapis.com" >
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin >
+    <link rel="stylesheet" href="/sass/style.css" >
     <script
       src="https://kit.fontawesome.com/2a5811d0f2.js"
       crossorigin="anonymous"
@@ -18,17 +18,17 @@
   <body>
     <main>
       <header class="header">
-        <img src="assets/logo.png" alt="logo" />
+        <img src="assets/logo.png" alt="logo" >
         <h1 class="title">Les petits plats</h1>
       </header>
-      <section class="search">
+      <div class="search">
         <form class="search-bar">
           <input
             id="search-input"
             type="text"
             placeholder="Rechercher une recette"
             class="search-bar-input"
-          />
+          >
           <i class="fa-solid fa-magnifying-glass"></i>
         </form>
         <div class="tags-section"></div>
@@ -40,7 +40,7 @@
                 type="text"
                 placeholder="Ingredients"
                 class="search-advanced-input"
-              />
+              >
               <i class="fa-solid fa-chevron-down"></i>
             </div>
             <div id="ingredients-search"></div>
@@ -52,7 +52,7 @@
                 type="text"
                 placeholder="Appareils"
                 class="search-advanced-input"
-              />
+              >
               <i class="fa-solid fa-chevron-down"></i>
             </div>
             <div id="appliances-search"></div>
@@ -64,14 +64,14 @@
                 type="text"
                 placeholder="Ustensiles"
                 class="search-advanced-input"
-              />
+              >
               <i class="fa-solid fa-chevron-down"></i>
             </div>
             <div id="ustensils-search"></div>
           </div>
         </div>
-      </section>
-      <section class="results"></section>
+      </div>
+      <div class="results"></div>
     </main>
     <script src="scripts/components/listeners.js"></script>
     <script src="scripts/components/searchFunctions.js"></script>
