@@ -166,7 +166,7 @@ function advancedFieldsListener(recipes) {
       advancedFieldsTagsResults = filteredTagsArray.filter((element) =>
         element.toLowerCase().startsWith(query)
       );
-
+      console.log(advancedFieldsTagsResults);
       //si résultat => actualisation des champs avancés, on relance le tagListener
       if (advancedFieldsTagsResults.length) {
         refreshAdvancedFields(input, advancedFieldsTagsResults);
@@ -249,18 +249,6 @@ function advancedFieldsListener(recipes) {
             break;
         }
         advancedList.style.display = "none";
-        // fermeture du champ sur chevron => on actualise les champs
-        if (mainSearchResults.length) {
-          fillAdvancedFields(mainSearchResults);
-
-        } else if (tagsSearchResults.length) {
-          fillAdvancedFields(tagsSearchResults);
-
-        } else {
-          fillAdvancedFields(recipes);
-        }
-
-        tagListener(); // on relance le tagListener
 
       } else {
         advancedList.style.display = "block";
