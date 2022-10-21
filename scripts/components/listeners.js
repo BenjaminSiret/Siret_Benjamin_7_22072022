@@ -167,11 +167,14 @@ function advancedFieldsListener(recipes) {
         element.toLowerCase().startsWith(query)
       );
 
-      // si résultat => actualisation des champs avancés, on relance le tagListener
+      //si résultat => actualisation des champs avancés, on relance le tagListener
       if (advancedFieldsTagsResults.length) {
         refreshAdvancedFields(input, advancedFieldsTagsResults);
         tagListener();
+      } else {
+        refreshAdvancedFields(input, advancedFieldsTagsResults);
       }
+
 
       let field = input.parentElement.parentElement;
       let button = input.parentElement;
