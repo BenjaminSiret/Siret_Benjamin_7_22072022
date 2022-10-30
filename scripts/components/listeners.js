@@ -75,8 +75,6 @@ function globalListener(recipes) {
     newTags = Array.from(document.querySelectorAll(".selected-tag"));
     tagsArray = newTags.map((tag) => tag.textContent);
 
-    //TODO: ajouter la fermeture de tous les champs avancés quand on supprime un tag ?
-
     // tags selectionnés && pas de résultats de recherche principale => on fait la recherche par tag sur toutes les recettes, on affiche les résultats
     if (newTags.length && !mainSearchResults.length) {
       //on vide le tableau de tags utilisés pour la recherche
